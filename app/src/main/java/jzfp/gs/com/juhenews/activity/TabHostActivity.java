@@ -83,7 +83,6 @@ public class TabHostActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        System.err.println("yidong -- onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.toolbar_search, menu);
         return true;
     }

@@ -20,18 +20,13 @@ import okhttp3.Response;
 public class OkhttpUtils {
     private static final String JOKE_URL = "http://japi.juhe.cn/joke/content/text.from?key=facd3f89a62400877ee559778e89bb6c&page=1&pagesize=20";
     private static final String FUNNY_URL = "http://japi.juhe.cn/joke/img/text.from?key=facd3f89a62400877ee559778e89bb6c&page=1&pagesize=20";
-
     private static final String HISTORY_URL = "http://api.juheapi.com/japi/toh?key=e5819f08efaa65bc97a7ef93de55cc46&v=1.0";
-
     private static final String NEWS_URL = "http://op.juhe.cn/onebox/news/query?key=a74ca9043842d6cfe2704f4b765ce2b9&q=";
-
     private static final OkHttpClient okHttpClient = new OkHttpClient();
-
     /*获取笑话信息*/
     public static String getJokes() {
         return getContentByURL(JOKE_URL);
     }
-
     /*获取新闻头条信息*/
     public static String getNews(String type) {
         String URL = "http://v.juhe.cn/toutiao/index?type=" + type + "&key=53555bf8010e1bf9c42cc0f9fbe8578a";
