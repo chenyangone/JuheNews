@@ -16,10 +16,13 @@
 package jzfp.gs.com.juhenews.activity;
 
 import android.app.ProgressDialog;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +33,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jzfp.gs.com.juhenews.R;
 
 /**
@@ -42,6 +47,11 @@ import jzfp.gs.com.juhenews.R;
  */
 public class WebActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.wv_content)
+    WebView wvContent;
+
     private String URL = null;
     private ProgressDialog loadingDialog = null;
 
@@ -49,6 +59,7 @@ public class WebActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+        ButterKnife.bind(this);
 
         loadingDialog = new ProgressDialog(this);
         loadingDialog.setIndeterminate(true);
@@ -65,39 +76,34 @@ public class WebActivity extends AppCompatActivity {
             }
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setTitleTextAppearance(this, R.style.ToolBarTextAppearance);
+        toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.overflow));
 
-        WebView webView = (WebView) findViewById(R.id.wv_content);
-        WebSettings webSettings = webView.getSettings();
+        WebSettings webSettings = wvContent.getSettings();
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         webSettings.setJavaScriptEnabled(true);//启用js
         webSettings.setBlockNetworkImage(false);//解决图片不显示
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            wvContent.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webView.loadUrl(URL);
+        wvContent.loadUrl(URL);
 
-        webView.setWebViewClient(new WebViewClient()
-        {
+        wvContent.setWebViewClient(new WebViewClient() {
             @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon)
-            {
-                if(!loadingDialog.isShowing()) {
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                if (!loadingDialog.isShowing()) {
                     loadingDialog.show();
                 }
             }
 
             @Override
-            public void onPageFinished(WebView view, String url)
-            {
-                if (null != loadingDialog)
-                {
+            public void onPageFinished(WebView view, String url) {
+                if (null != loadingDialog) {
                     //加载完成,dialog销毁
                     loadingDialog.cancel();
                 }
@@ -139,6 +145,19 @@ public class WebActivity extends AppCompatActivity {
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, URL);
                 startActivity(Intent.createChooser(intent, getTitle()));
+            }
+            break;
+            case R.id.openinbrowse: {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(URL));
+                startActivity(intent);
+            }
+            break;
+            case R.id.copyurl: {
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                clipboardManager.setText(URL);
+                Snackbar.make(wvContent, "已复制到剪切板", Snackbar.LENGTH_SHORT).show();
             }
             break;
             default:
