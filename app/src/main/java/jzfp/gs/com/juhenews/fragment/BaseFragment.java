@@ -1,3 +1,18 @@
+/**
+ * Copyright 2016 yidong
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package jzfp.gs.com.juhenews.fragment;
 
 import android.os.Bundle;
@@ -14,11 +29,15 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jzfp.gs.com.juhenews.R;
-import jzfp.gs.com.juhenews.utils.OkhttpUtils;
+import jzfp.gs.com.juhenews.utils.OkHttpUtils;
 
 /**
- * Created by lisa on 2016/12/13.
- * Email: 457420045@qq.com
+ * 文 件 名: BaseFragment
+ * 创 建 人: 易冬
+ * 创建日期: 2016/12/27 08:44
+ * 邮   箱: onlyloveyd@gmail.com
+ * 博   客: http://onlyloveyd.github.io/blog
+ * 描   述：Fragment封装父类
  */
 
 @SuppressWarnings("deprecation")
@@ -35,7 +54,7 @@ public class BaseFragment extends Fragment{
         super.onCreateView(inflater, container, savedInstanceState);
 
         //      create main panel for fragment
-        View view = inflater.inflate(R.layout.base_fragment, container, false);
+        View view = inflater.inflate(R.layout.frag_base, container, false);
         ButterKnife.bind(this, view);
 
         toast = Toast.makeText(getContext(), "网络连接错误，请检查网络状态", Toast.LENGTH_SHORT);
@@ -58,7 +77,7 @@ public class BaseFragment extends Fragment{
     }
 
     public void pullData() {
-        if(!OkhttpUtils.isNetworkAvailable(getContext())) {
+        if(!OkHttpUtils.isNetworkAvailable(getContext())) {
             if(swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(false);
             }
