@@ -70,7 +70,7 @@ public class QueryNewsAdapter extends RecyclerView.Adapter {
 
             String pic1path = data.getImg();
             if (pic1path != null) {
-                Glide.with(context).load(pic1path).placeholder(R.mipmap.loading).crossFade().into(newsViewHolder.pic1);
+                Glide.with(context).load(pic1path).placeholder(R.drawable.image_loading).crossFade().into(newsViewHolder.pic1);
             } else {
                 newsViewHolder.pic1.setVisibility(GONE);
             }

@@ -80,6 +80,8 @@ public class WebActivity extends AppCompatActivity {
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setTitleTextAppearance(this, R.style.ToolBarTextAppearance);
+
+        /* modify overflow icon */
         toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.overflow));
 
         WebSettings webSettings = wvContent.getSettings();

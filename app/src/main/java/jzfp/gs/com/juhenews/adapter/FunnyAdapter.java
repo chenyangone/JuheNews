@@ -64,7 +64,7 @@ public class FunnyAdapter extends RecyclerView.Adapter {
             String pic = resultBean.getUrl();
             if (pic != null && !pic.isEmpty()) {
                 funnyViewHolder.gif.setVisibility(View.VISIBLE);
-                Glide.with(context).load(pic).placeholder(R.drawable.share).crossFade().into(funnyViewHolder.gif);
+                Glide.with(context).load(pic).placeholder(R.drawable.image_loading).crossFade().into(funnyViewHolder.gif);
             } else {
                 funnyViewHolder.gif.setVisibility(View.GONE);
             }
