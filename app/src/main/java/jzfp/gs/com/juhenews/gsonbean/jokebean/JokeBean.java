@@ -16,6 +16,7 @@
 package jzfp.gs.com.juhenews.gsonbean.jokebean;
 
 import java.util.List;
+
 /**
  * 文 件 名: JokeBean
  * 创 建 人: 易冬
@@ -54,7 +55,7 @@ public class JokeBean {
         this.result = result;
     }
 
-    public class Result {
+    public static class Result {
 
         private List<Data> data;
 
@@ -69,7 +70,7 @@ public class JokeBean {
     }
 
 
-    public class Data {
+    public static class Data {
 
         private String content;
         private String hashid;

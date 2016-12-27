@@ -60,8 +60,18 @@ public class JokeAdapter extends RecyclerView.Adapter {
         return 0;
     }
 
-    public void setJokes(JokeBean jokeBean) {
-        this.jokeData = jokeBean.getResult().getData();
+    /**
+     * 添加Joke数据
+     *
+     * @param jokeBean
+     */
+    public void addJokeData(JokeBean jokeBean) {
+        List<JokeBean.Data> dataList = jokeBean.getResult().getData();
+        if (jokeData == null) {
+            jokeData = dataList;
+        } else {
+            jokeData.addAll(dataList);
+        }
         notifyDataSetChanged();
     }
 

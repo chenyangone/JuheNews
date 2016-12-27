@@ -47,8 +47,8 @@ import static android.view.View.GONE;
  */
 
 public class NewsAdapter extends RecyclerView.Adapter {
-    private List<NewsBean.ResultBean.DataBean> newsData;
     Context context;
+    private List<NewsBean.ResultBean.DataBean> newsData;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

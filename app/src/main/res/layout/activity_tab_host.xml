@@ -6,11 +6,11 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="@color/colorToolbar"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_height="40dp">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="40dp"
+        android:background="@color/colorToolbar"
+        android:fitsSystemWindows="true"></android.support.v7.widget.Toolbar>
+
     <TabHost
         android:id="@+id/tabhost"
         android:layout_width="match_parent"
@@ -26,26 +26,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="12">
+
                 <fragment
                     android:id="@+id/frag_news"
                     android:name="jzfp.gs.com.juhenews.fragment.ZixunFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
+
                 <fragment
                     android:id="@+id/frag_joke"
                     android:name="jzfp.gs.com.juhenews.fragment.JokeFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
+
                 <fragment
                     android:id="@+id/frag_funny"
                     android:name="jzfp.gs.com.juhenews.fragment.FunnyFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
+
                 <fragment
                     android:id="@+id/frag_history"
                     android:name="jzfp.gs.com.juhenews.fragment.HistoryFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
             </FrameLayout>
 

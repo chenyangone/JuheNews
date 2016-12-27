@@ -50,8 +50,8 @@
                         android:id="@+id/tv_news_author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
                         android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
                         android:textColor="@color/colorComment"
                         android:textSize="10sp" />
 
@@ -59,8 +59,8 @@
                         android:id="@+id/tv_news_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
                         android:layout_toRightOf="@+id/tv_news_author"
                         android:gravity="right"
                         android:textColor="@color/colorComment"

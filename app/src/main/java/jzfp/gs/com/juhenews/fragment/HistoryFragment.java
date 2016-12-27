@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 
 import butterknife.ButterKnife;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import jzfp.gs.com.juhenews.adapter.HistoryAdapter;
 import jzfp.gs.com.juhenews.gsonbean.historybean.HistoryBean;
 import jzfp.gs.com.juhenews.utils.OkHttpUtils;
@@ -52,9 +53,9 @@ public class HistoryFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
+
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         historyAdapter = new HistoryAdapter();
-
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.setAdapter(historyAdapter);
         return view;
@@ -74,22 +75,27 @@ public class HistoryFragment extends BaseFragment {
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
             @Override
             public void onNext(String response) {
-                //swipeRefreshLayout.setRefreshing(true);
                 Gson gson = new Gson();
                 HistoryBean historyBean = gson.fromJson(response, HistoryBean.class);
-                historyAdapter.setHistory(historyBean);
+                historyAdapter.addHistoryData(historyBean);
             }
 
             @Override
             public void onCompleted() {
-                swipeRefreshLayout.setRefreshing(false);
+                onDataPullFinished();
             }
 
             @Override
             public void onError(Throwable e) {
-                //handle exception
+                onErrorReceived();
                 e.printStackTrace();
             }
         });
+    }
+
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
     }
 }

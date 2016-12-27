@@ -78,8 +78,12 @@ public class HistoryAdapter extends RecyclerView.Adapter {
         return 0;
     }
 
-    public void setHistory(HistoryBean newsBean) {
-        this.historyData = newsBean.getResult();
+    public void addHistoryData(HistoryBean newsBean) {
+        if (historyData == null) {
+            this.historyData = newsBean.getResult();
+        } else {
+            historyData.addAll(newsBean.getResult());
+        }
         notifyDataSetChanged();
     }
 

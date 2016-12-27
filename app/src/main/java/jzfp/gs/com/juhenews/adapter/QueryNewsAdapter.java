@@ -33,7 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jzfp.gs.com.juhenews.R;
 import jzfp.gs.com.juhenews.activity.WebActivity;
-import jzfp.gs.com.juhenews.gsonbean.newsbean.NewsBean;
 import jzfp.gs.com.juhenews.gsonbean.querynewsbean.QueryNewsBean;
 
 import static android.view.View.GONE;
@@ -98,7 +97,6 @@ public class QueryNewsAdapter extends RecyclerView.Adapter {
 
     public void setQueryNews(QueryNewsBean newsBean) {
         this.newsData = newsBean.getResult();
-        System.err.println("yidong -- newsData = " + newsData);
         notifyDataSetChanged();
     }
 

@@ -9,14 +9,12 @@
     <item
         android:id="@+id/openinbrowse"
         android:title="在浏览器中打开"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/copyurl"
         android:title="复制链接"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 
 
 </menu>

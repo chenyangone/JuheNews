@@ -84,6 +84,8 @@ public class TabHostActivity extends AppCompatActivity {
                     imageView.setImageResource(R.drawable.history);
                     tabHost.addTab(tabHost.newTabSpec("4").setIndicator(view).setContent(R.id.frag_history));
                     break;
+                default:
+                    break;
             }
 
         }
@@ -94,7 +96,7 @@ public class TabHostActivity extends AppCompatActivity {
                 for (int i = 0; i < 4; i++) {//颜色全部重置
                     ((TextView) tabHost.getTabWidget().getChildTabViewAt(i).findViewById(R.id.tv_indicator)).setTextColor(getResources().getColor(R.color.colorBlack));
                 }
-                if (tabHost.getCurrentTabTag() == tabId) {
+                if (tabHost.getCurrentTabTag().equals(tabId)) {
                     ((TextView) tabHost.getCurrentTabView().findViewById(R.id.tv_indicator)).setTextColor(getResources().getColor(R.color.colorBottomSelected));
                 }//选中的那个Tab文字颜色修改
             }

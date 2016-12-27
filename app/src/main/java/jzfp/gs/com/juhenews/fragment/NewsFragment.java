@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import jzfp.gs.com.juhenews.adapter.NewsAdapter;
 import jzfp.gs.com.juhenews.gsonbean.newsbean.NewsBean;
 import jzfp.gs.com.juhenews.utils.OkHttpUtils;
@@ -45,6 +46,7 @@ import rx.schedulers.Schedulers;
 public class NewsFragment extends BaseFragment {
     private NewsAdapter newsAdapter;
     private String type = null;
+
     /*
      * new instance 方法 获取JokeFragment
      */
@@ -60,7 +62,7 @@ public class NewsFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        if(args!= null) {
+        if (args != null) {
             type = args.getString("TYPE");
         }
     }
@@ -89,7 +91,6 @@ public class NewsFragment extends BaseFragment {
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
             @Override
             public void onNext(String response) {
-               // swipeRefreshLayout.setRefreshing(true);
                 Gson gson = new Gson();
                 NewsBean newsBean = gson.fromJson(response, NewsBean.class);
                 newsAdapter.setNews(newsBean);
@@ -97,14 +98,19 @@ public class NewsFragment extends BaseFragment {
 
             @Override
             public void onCompleted() {
-                swipeRefreshLayout.setRefreshing(false);
+                onDataPullFinished();
             }
 
             @Override
             public void onError(Throwable e) {
-                //handle exception
+                onErrorReceived();
                 e.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
     }
 }

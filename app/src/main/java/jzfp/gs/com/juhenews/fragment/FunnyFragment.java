@@ -63,29 +63,31 @@ public class FunnyFragment extends BaseFragment {
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                String response = OkHttpUtils.getFunny();
+                String response = OkHttpUtils.getFunny(mPageNum);
                 subscriber.onNext(response);
                 subscriber.onCompleted();
             }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
-            @Override
-            public void onNext(String response) {
-                //swipeRefreshLayout.setRefreshing(true);
-                Gson gson = new Gson();
-                FunnyBean funnyBean = gson.fromJson(response, FunnyBean.class);
-                funnyAdapter.setFunnyData(funnyBean);
-            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onNext(String response) {
+                        Gson gson = new Gson();
+                        FunnyBean funnyBean = gson.fromJson(response, FunnyBean.class);
+                        funnyAdapter.addFunnyData(funnyBean);
+                    }
 
-            @Override
-            public void onCompleted() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
+                    @Override
+                    public void onCompleted() {
+                        onDataPullFinished();
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                //handle exception
-                e.printStackTrace();
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorReceived();
+                        e.printStackTrace();
+                    }
+                });
     }
 }

@@ -51,7 +51,7 @@ import rx.schedulers.Schedulers;
  * 博   客: http://onlyloveyd.github.io/blog
  * 描   述：热点搜索
  */
-public class SearchActivity extends AppCompatActivity{
+public class SearchActivity extends AppCompatActivity {
 
 
     @BindView(R.id.et_search)
@@ -94,11 +94,11 @@ public class SearchActivity extends AppCompatActivity{
     @OnClick({R.id.tv_search})
     public void onClick() {
         loadingDialog.show();
-        if(etSearch.getText().toString()!= null) {
+        if (etSearch.getText().toString() != null) {
             Observable.create(new Observable.OnSubscribe<String>() {
                 @Override
                 public void call(Subscriber<? super String> subscriber) {
-                    String response =  OkHttpUtils.getCurrentNews(etSearch.getText().toString());
+                    String response = OkHttpUtils.getCurrentNews(etSearch.getText().toString());
                     subscriber.onNext(response);
                     subscriber.onCompleted();
                 }
@@ -111,11 +111,11 @@ public class SearchActivity extends AppCompatActivity{
 
                 @Override
                 public void onCompleted() {
-                    if(loadingDialog.isShowing()) {
+                    if (loadingDialog.isShowing()) {
                         loadingDialog.cancel();
                     }
                     if (rvSearchResult.getAdapter().getItemCount() == 0) {
-                        Toast  toast = Toast.makeText(SearchActivity.this, "Sorry, 没有搜索到任何东西", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(SearchActivity.this, "Sorry, 没有搜索到任何东西", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }
@@ -132,11 +132,13 @@ public class SearchActivity extends AppCompatActivity{
     }
 
     @OnTextChanged(R.id.et_search)
-    public void onTextChange(CharSequence text){
-        if(text!= null) {
-            tvSearch.setTextColor(getResources().getColor(R.color.colorBlack));
-        } else {
+    public void onTextChange(CharSequence text) {
+        if (text.toString() == null || text.length() == 0) {
             tvSearch.setTextColor(getResources().getColor(R.color.colorComment));
+            tvSearch.setClickable(false);
+        } else {
+            tvSearch.setTextColor(getResources().getColor(R.color.colorBlack));
+            tvSearch.setClickable(true);
         }
     }
 
@@ -146,7 +148,8 @@ public class SearchActivity extends AppCompatActivity{
             case android.R.id.home:
                 onBackPressed();
                 break;
-            default:break;
+            default:
+                break;
         }
         return true;
     }

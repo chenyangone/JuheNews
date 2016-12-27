@@ -46,11 +46,11 @@ import rx.schedulers.Schedulers;
 public class JokeFragment extends BaseFragment {
     private JokeAdapter jokeAdapter;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        //      create main panel for fragment
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         jokeAdapter = new JokeAdapter();
 
@@ -65,27 +65,26 @@ public class JokeFragment extends BaseFragment {
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                String response = OkHttpUtils.getJokes();
+                String response = OkHttpUtils.getJokes(mPageNum);
                 subscriber.onNext(response);
                 subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
             @Override
             public void onNext(String response) {
-                //swipeRefreshLayout.setRefreshing(true);
                 Gson gson = new Gson();
                 JokeBean jokeBean = gson.fromJson(response, JokeBean.class);
-                jokeAdapter.setJokes(jokeBean);
+                jokeAdapter.addJokeData(jokeBean);
             }
 
             @Override
             public void onCompleted() {
-                swipeRefreshLayout.setRefreshing(false);
+                onDataPullFinished();
             }
 
             @Override
             public void onError(Throwable e) {
-                //handle exception
+                onErrorReceived();
                 e.printStackTrace();
             }
         });

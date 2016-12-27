@@ -16,6 +16,8 @@
 package jzfp.gs.com.juhenews.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jzfp.gs.com.juhenews.R;
+import jzfp.gs.com.juhenews.activity.WebActivity;
 import jzfp.gs.com.juhenews.gsonbean.funnybean.FunnyBean;
 
 /**
@@ -61,13 +64,25 @@ public class FunnyAdapter extends RecyclerView.Adapter {
             funnyViewHolder.content.setText(resultBean.getContent());
             funnyViewHolder.date.setText(resultBean.getUpdatetime());
 
-            String pic = resultBean.getUrl();
+            final String pic = resultBean.getUrl();
             if (pic != null && !pic.isEmpty()) {
                 funnyViewHolder.gif.setVisibility(View.VISIBLE);
                 Glide.with(context).load(pic).placeholder(R.drawable.image_loading).crossFade().into(funnyViewHolder.gif);
             } else {
                 funnyViewHolder.gif.setVisibility(View.GONE);
             }
+
+            funnyViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(context, WebActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("URL", pic);
+                    intent.putExtra("extra", bundle);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -77,8 +92,18 @@ public class FunnyAdapter extends RecyclerView.Adapter {
         return 0;
     }
 
-    public void setFunnyData(FunnyBean funnyBean) {
-        this.funnyData = funnyBean.getResult().getData();
+    /**
+     * 添加趣图数据
+     *
+     * @param funnyBean
+     */
+    public void addFunnyData(FunnyBean funnyBean) {
+        List<FunnyBean.ResultBean.DataBean> dataList = funnyBean.getResult().getData();
+        if (funnyData == null) {
+            this.funnyData = dataList;
+        } else {
+            this.funnyData.addAll(dataList);
+        }
         notifyDataSetChanged();
     }
 

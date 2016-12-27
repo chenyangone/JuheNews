@@ -17,17 +17,17 @@ package jzfp.gs.com.juhenews.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
 import jzfp.gs.com.juhenews.R;
 import jzfp.gs.com.juhenews.utils.OkHttpUtils;
 
@@ -41,56 +41,81 @@ import jzfp.gs.com.juhenews.utils.OkHttpUtils;
  */
 
 @SuppressWarnings("deprecation")
-public class BaseFragment extends Fragment{
-    @BindView(R.id.swipe_container)
-    SwipeRefreshLayout swipeRefreshLayout;
+public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+    public int mPageNum = 1;
     @BindView(R.id.rv_content)
     RecyclerView recyclerView;
+    @BindView(R.id.bga_container)
+    BGARefreshLayout bgaContainer;
 
-    Toast toast ;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
-        //      create main panel for fragment
         View view = inflater.inflate(R.layout.frag_base, container, false);
         ButterKnife.bind(this, view);
-
-        toast = Toast.makeText(getContext(), "网络连接错误，请检查网络状态", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(true);
-                pullData();
-            }
-        });
-        swipeRefreshLayout.setRefreshing(true);
+        initBGALayout();
         pullData();
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_bright),
-                getResources().getColor(android.R.color.holo_green_light),
-                getResources().getColor(android.R.color.holo_orange_light));
         return view;
     }
 
+    private void initBGALayout() {
+        bgaContainer.setDelegate(this);
+        BGAStickinessRefreshViewHolder refreshViewHolder = new BGAStickinessRefreshViewHolder(getContext(), true);
+        refreshViewHolder.setRotateImage(R.mipmap.bga_refresh_stickiness);
+        refreshViewHolder.setStickinessColor(R.color.colorToolbar);
+        refreshViewHolder.setLoadingMoreText("加载更多");
+        refreshViewHolder.setLoadMoreBackgroundColorRes(R.color.colorWhite);
+        refreshViewHolder.setRefreshViewBackgroundColorRes(R.color.colorWhite);
+        bgaContainer.setRefreshViewHolder(refreshViewHolder);
+    }
+
     public void pullData() {
-        if(!OkHttpUtils.isNetworkAvailable(getContext())) {
-            if(swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(false);
+        if (!OkHttpUtils.isNetworkAvailable(getContext())) {
+            if (bgaContainer != null) {
+                bgaContainer.endRefreshing();
+                Snackbar.make(bgaContainer, "网络链接错误!", Snackbar.LENGTH_SHORT).show();
             }
-            toast.show();
             return;
+        }
+        if (bgaContainer != null) {
+            bgaContainer.beginRefreshing();
         }
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if(toast!= null) {
-            toast.cancel();
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mPageNum = 1;
+        pullData();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        mPageNum++;
+        pullData();
+        return true;
+    }
+
+    /**
+     * 处理onCompleted
+     */
+    public void onDataPullFinished() {
+        if (bgaContainer.isLoadingMore()) {
+            bgaContainer.endLoadingMore();
+        } else {
+            bgaContainer.endRefreshing();
         }
     }
+
+    /**
+     * 处理onError,给用户提示
+     */
+    public void onErrorReceived() {
+        if (bgaContainer != null) {
+            onDataPullFinished();
+            Snackbar.make(bgaContainer, "网络请求失败!", Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+
 }
