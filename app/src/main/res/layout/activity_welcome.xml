@@ -14,7 +14,7 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/iv_banner"
         android:layout_centerHorizontal="true"
-        android:text="我的头条"
+        android:text="微小的世界，看万象于此"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         android:textStyle="italic" />
