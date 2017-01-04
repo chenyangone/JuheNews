@@ -24,6 +24,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.johnpersano.supertoasts.library.Style;
+import com.github.johnpersano.supertoasts.library.SuperToast;
+import com.github.johnpersano.supertoasts.library.utils.PaletteUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -72,9 +76,9 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
 
     public void pullData() {
         if (!OkHttpUtils.isNetworkAvailable(getContext())) {
+            showToast("无数据网络");
             if (bgaContainer != null) {
                 bgaContainer.endRefreshing();
-                Snackbar.make(bgaContainer, "网络链接错误!", Snackbar.LENGTH_SHORT).show();
             }
             return;
         }
@@ -103,7 +107,7 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
             bgaContainer.endRefreshing();
         }
         if(recyclerView!= null && recyclerView.getAdapter().getItemCount() == 0) {
-            Snackbar.make(bgaContainer, "暂时没有数据", Snackbar.LENGTH_SHORT).show();
+            showToast("暂时没有数据");
         }
     }
 
@@ -113,8 +117,16 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
     public void onErrorReceived() {
         if (bgaContainer != null) {
             onDataPullFinished();
-            Snackbar.make(bgaContainer, "网络请求失败!", Snackbar.LENGTH_SHORT).show();
+            showToast("网络请求错误");
         }
+    }
+
+    private void showToast(String message) {
+        SuperToast.cancelAllSuperToasts();
+        SuperToast.create(getActivity(), message, Style.TYPE_STANDARD)
+                .setDuration(Style.DURATION_LONG)
+                .setColor(0xffd43d3d)
+                .setAnimations(Style.ANIMATIONS_POP).show();
     }
 
 }
