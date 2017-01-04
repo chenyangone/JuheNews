@@ -78,9 +78,6 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
             }
             return;
         }
-        if (bgaContainer != null) {
-            bgaContainer.beginRefreshing();
-        }
     }
 
     @Override
