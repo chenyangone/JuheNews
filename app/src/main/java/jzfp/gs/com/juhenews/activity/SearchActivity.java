@@ -48,7 +48,7 @@ import rx.schedulers.Schedulers;
  * 创 建 人: 易冬
  * 创建日期: 2016/12/27
  * 邮   箱: onlyloveyd@gmail.com
- * 博   客: http://onlyloveyd.github.io/blog
+ * 博   客: http://onlyloveyd.github.io
  * 描   述：热点搜索
  */
 public class SearchActivity extends AppCompatActivity {

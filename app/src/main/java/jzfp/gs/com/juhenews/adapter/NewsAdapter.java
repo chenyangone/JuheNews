@@ -42,7 +42,7 @@ import static android.view.View.GONE;
  * 创 建 人: 易冬
  * 创建日期: 2016/12/27 08:44
  * 邮   箱: onlyloveyd@gmail.com
- * 博   客: http://onlyloveyd.github.io/blog
+ * 博   客: http://onlyloveyd.github.io
  * 描   述：每一类新闻详情界面Adapter
  */
 
