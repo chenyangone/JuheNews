@@ -16,6 +16,7 @@
 package jzfp.gs.com.juhenews.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +66,9 @@ public class HistoryAdapter extends RecyclerView.Adapter {
             String pic = resultBean.getPic();
             if (pic != null && !pic.isEmpty()) {
                 historyViewHolder.pic.setVisibility(View.VISIBLE);
-                Glide.with(context).load(pic).placeholder(R.drawable.share).crossFade().into(historyViewHolder.pic);
+                AnimationDrawable animationDrawable = (AnimationDrawable) context.getResources().getDrawable(R.drawable.image_loading);
+                animationDrawable.start();
+                Glide.with(context).load(pic).placeholder(animationDrawable).crossFade().into(historyViewHolder.pic);
             } else {
                 historyViewHolder.pic.setVisibility(View.GONE);
             }

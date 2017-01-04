@@ -22,6 +22,7 @@ import android.text.format.Time;
 
 import java.io.IOException;
 
+import jzfp.gs.com.juhenews.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -31,7 +32,7 @@ import okhttp3.Response;
  * 创 建 人: 易冬
  * 创建日期: 2016/12/27 08:44
  * 邮   箱: onlyloveyd@gmail.com
- * 博   客: http://onlyloveyd.github.io/blog
+ * 博   客: http://onlyloveyd.github.io
  * 描   述：工具类
  */
 @SuppressWarnings("deprecation")
@@ -41,6 +42,7 @@ public class OkHttpUtils {
     private static final String HISTORY_URL = "http://api.juheapi.com/japi/toh?key=e5819f08efaa65bc97a7ef93de55cc46&v=1.0";
     private static final String NEWS_URL = "http://op.juhe.cn/onebox/news/query?key=a74ca9043842d6cfe2704f4b765ce2b9&q=";
     private static OkHttpClient okHttpClient;
+    private static boolean YLog = false;
 
     /**
      * 初始化
@@ -49,6 +51,7 @@ public class OkHttpUtils {
         if (okHttpClient == null) {
             okHttpClient = new OkHttpClient();
         }
+        YLog = BuildConfig.YLog;
         return;
     }
 
@@ -134,6 +137,9 @@ public class OkHttpUtils {
         try {
             Response response = okHttpClient.newCall(request).execute();
             String result = response.body().string();//只能调用一次
+            if(YLog) {
+                System.err.println("URL = " + url + "result = " + result);
+            }
             return result;
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,4 +159,6 @@ public class OkHttpUtils {
         NetworkInfo ni = cm.getActiveNetworkInfo();
         return ((ni != null && ni.isConnected()));
     }
+
+
 }

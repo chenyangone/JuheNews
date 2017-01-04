@@ -102,6 +102,9 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
         } else {
             bgaContainer.endRefreshing();
         }
+        if(recyclerView!= null && recyclerView.getAdapter().getItemCount() == 0) {
+            Snackbar.make(bgaContainer, "暂时没有数据", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -113,6 +116,5 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
             Snackbar.make(bgaContainer, "网络请求失败!", Snackbar.LENGTH_SHORT).show();
         }
     }
-
 
 }

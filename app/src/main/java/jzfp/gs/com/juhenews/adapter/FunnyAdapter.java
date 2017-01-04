@@ -17,6 +17,7 @@ package jzfp.gs.com.juhenews.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -67,7 +68,9 @@ public class FunnyAdapter extends RecyclerView.Adapter {
             final String pic = resultBean.getUrl();
             if (pic != null && !pic.isEmpty()) {
                 funnyViewHolder.gif.setVisibility(View.VISIBLE);
-                Glide.with(context).load(pic).placeholder(R.drawable.image_loading).crossFade().into(funnyViewHolder.gif);
+                AnimationDrawable animationDrawable = (AnimationDrawable) context.getResources().getDrawable(R.drawable.image_loading);
+                animationDrawable.start();
+                Glide.with(context).load(pic).placeholder(animationDrawable).crossFade().into(funnyViewHolder.gif);
             } else {
                 funnyViewHolder.gif.setVisibility(View.GONE);
             }
