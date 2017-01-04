@@ -123,8 +123,7 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
 
     private void showToast(String message) {
         SuperToast.cancelAllSuperToasts();
-        SuperToast.create(getActivity(), message, Style.TYPE_STANDARD)
-                .setDuration(Style.DURATION_LONG)
+        SuperToast.create(getActivity(), message, Style.DURATION_LONG)
                 .setColor(0xffd43d3d)
                 .setAnimations(Style.ANIMATIONS_POP).show();
     }
