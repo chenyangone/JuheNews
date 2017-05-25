@@ -29,25 +29,25 @@
 
                 <fragment
                     android:id="@+id/frag_news"
-                    android:name="jzfp.gs.com.juhenews.fragment.ZixunFragment"
+                    android:name="com.onlyloveyd.juhenews.fragment.ZixunFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
                 <fragment
                     android:id="@+id/frag_joke"
-                    android:name="jzfp.gs.com.juhenews.fragment.JokeFragment"
+                    android:name="com.onlyloveyd.juhenews.fragment.JokeFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
                 <fragment
                     android:id="@+id/frag_funny"
-                    android:name="jzfp.gs.com.juhenews.fragment.FunnyFragment"
+                    android:name="com.onlyloveyd.juhenews.fragment.FunnyFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
                 <fragment
                     android:id="@+id/frag_history"
-                    android:name="jzfp.gs.com.juhenews.fragment.HistoryFragment"
+                    android:name="com.onlyloveyd.juhenews.fragment.HistoryFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
