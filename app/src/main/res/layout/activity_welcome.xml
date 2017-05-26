@@ -4,20 +4,9 @@
     android:id="@+id/activity_welcome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context="jzfp.gs.com.juhenews.activity.WelcomeActivity">
+    android:background="@color/colorBlack"
+    tools:context=".activity.WelcomeActivity">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/iv_banner"
-        android:layout_centerHorizontal="true"
-        android:text="微小的世界，看万象于此"
-        android:textColor="@color/colorBlack"
-        android:textSize="18sp"
-        android:textStyle="italic" />
 
     <ImageView
         android:id="@+id/iv_banner"
@@ -27,7 +16,7 @@
         android:layout_marginBottom="50dp"
         android:contentDescription="@null"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_my_launher" />
+        android:src="@mipmap/ic_launcher" />
 
 
     <TextView
