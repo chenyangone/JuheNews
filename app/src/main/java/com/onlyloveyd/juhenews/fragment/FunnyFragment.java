@@ -15,27 +15,12 @@
  */
 package com.onlyloveyd.juhenews.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.onlyloveyd.juhenews.gsonbean.FunnyBean;
+import com.onlyloveyd.juhenews.retrofit.Retrofitance;
 
-import com.google.gson.Gson;
-
-import com.onlyloveyd.juhenews.adapter.FunnyAdapter;
-import com.onlyloveyd.juhenews.gsonbean.funnybean.FunnyBean;
-import com.onlyloveyd.juhenews.utils.OkHttpUtils;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -47,59 +32,59 @@ import io.reactivex.schedulers.Schedulers;
  * 描   述：趣图Fragment
  */
 
-@SuppressWarnings("deprecation")
 public class FunnyFragment extends BaseFragment {
-    private FunnyAdapter funnyAdapter;
+    int pagenum = 1;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        funnyAdapter = new FunnyAdapter();
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        recyclerView.setAdapter(funnyAdapter);
-        return view;
+    public void initBGAData() {
+        bgaRefreshLayout.beginRefreshing();
+    }
+
+    public void getContent(int pagenum) {
+        Observer<FunnyBean> observer = new Observer<FunnyBean>() {
+            @Override
+            public void onComplete() {
+                endLoading();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                endLoading();
+                onNetworkError();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(FunnyBean funnyBean) {
+                if (bgaRefreshLayout.isLoadingMore()) {
+                } else {
+                    mVisitableList.clear();
+                }
+                if (funnyBean.getResult() == null || funnyBean.getResult().getData() == null
+                        || funnyBean.getResult().getData().size() == 0) {
+                    onDataEmpty();
+                } else {
+                    mVisitableList.addAll(funnyBean.getResult().getData());
+                }
+                mMultiRecyclerAdapter.setData(mVisitableList);
+            }
+        };
+        Retrofitance.getInstance().getFunny(observer, pagenum);
     }
 
     @Override
-    public void pullData() {
-        super.pullData();
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        getContent(1);
+    }
 
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception {
-                String response = OkHttpUtils.getFunny(mPageNum);
-                emitter.onNext(response);
-                emitter.onComplete();
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(String response) {
-                        Gson gson = new Gson();
-                        FunnyBean funnyBean = gson.fromJson(response, FunnyBean.class);
-                        funnyAdapter.addFunnyData(funnyBean);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        onDataPullFinished();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onErrorReceived();
-                        e.printStackTrace();
-                    }
-                });
-
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        getContent(++pagenum);
+        return true;
     }
 }

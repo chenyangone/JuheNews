@@ -33,7 +33,10 @@ import com.onlyloveyd.juhenews.fragment.NewsFragment;
 public class NewsPagerAdapter extends FragmentPagerAdapter {
 
     private final String[] titles = {"头条", "社会", "国内", "国际", "娱乐", "体育", "军事", "科技", "财经", "时尚"};
-    private final String[] titles_en={"top", "shehui","guonei","guoji","yule","tiyu","junshi","keji","caijing","shishang"};
+    private final String[] titles_en =
+            {"top", "shehui", "guonei", "guoji", "yule", "tiyu", "junshi", "keji", "caijing",
+                    "shishang"};
+
     public NewsPagerAdapter(FragmentManager fm) {
         super(fm);
     }

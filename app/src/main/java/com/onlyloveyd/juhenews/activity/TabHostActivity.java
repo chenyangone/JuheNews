@@ -50,7 +50,7 @@ public class TabHostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_host);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         toolbar.setTitle(R.string.app_name);
@@ -60,7 +60,8 @@ public class TabHostActivity extends AppCompatActivity {
         tabHost.setup();//初始化TabHost
         /*添加tab*/
         for (int i = 0; i < 4; i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.tab_widget_indicator, null, false);
+            View view = LayoutInflater.from(this).inflate(R.layout.tab_widget_indicator, null,
+                    false);
             TextView textView = (TextView) view.findViewById(R.id.tv_indicator);
             ImageView imageView = (ImageView) view.findViewById(R.id.iv_indicator);
 
@@ -68,22 +69,26 @@ public class TabHostActivity extends AppCompatActivity {
                 case 0:
                     textView.setText("资讯");
                     imageView.setImageResource(R.drawable.news);
-                    tabHost.addTab(tabHost.newTabSpec("1").setIndicator(view).setContent(R.id.frag_news));
+                    tabHost.addTab(tabHost.newTabSpec("1").setIndicator(view).setContent(
+                            R.id.frag_news));
                     break;
                 case 1:
                     textView.setText("笑话");
                     imageView.setImageResource(R.drawable.joke);
-                    tabHost.addTab(tabHost.newTabSpec("2").setIndicator(view).setContent(R.id.frag_joke));
+                    tabHost.addTab(tabHost.newTabSpec("2").setIndicator(view).setContent(
+                            R.id.frag_joke));
                     break;
                 case 2:
                     textView.setText("趣图");
                     imageView.setImageResource(R.drawable.funny);
-                    tabHost.addTab(tabHost.newTabSpec("3").setIndicator(view).setContent(R.id.frag_funny));
+                    tabHost.addTab(tabHost.newTabSpec("3").setIndicator(view).setContent(
+                            R.id.frag_funny));
                     break;
                 case 3:
                     textView.setText("历史");
                     imageView.setImageResource(R.drawable.history);
-                    tabHost.addTab(tabHost.newTabSpec("4").setIndicator(view).setContent(R.id.frag_history));
+                    tabHost.addTab(tabHost.newTabSpec("4").setIndicator(view).setContent(
+                            R.id.frag_history));
                     break;
                 default:
                     break;
@@ -95,21 +100,26 @@ public class TabHostActivity extends AppCompatActivity {
             @Override
             public void onTabChanged(String tabId) {
                 for (int i = 0; i < 4; i++) {//颜色全部重置
-                    ((TextView) tabHost.getTabWidget().getChildTabViewAt(i).findViewById(R.id.tv_indicator)).setTextColor(getResources().getColor(R.color.colorBlack));
+                    ((TextView) tabHost.getTabWidget().getChildTabViewAt(i).findViewById(
+                            R.id.tv_indicator)).setTextColor(
+                            getResources().getColor(R.color.colorBlack));
                 }
                 if (tabHost.getCurrentTabTag().equals(tabId)) {
-                    ((TextView) tabHost.getCurrentTabView().findViewById(R.id.tv_indicator)).setTextColor(getResources().getColor(R.color.colorBottomSelected));
+                    ((TextView) tabHost.getCurrentTabView().findViewById(
+                            R.id.tv_indicator)).setTextColor(
+                            getResources().getColor(R.color.colorBottomSelected));
                 }//选中的那个Tab文字颜色修改
             }
         });
-        ((TextView) tabHost.getCurrentTabView().findViewById(R.id.tv_indicator)).setTextColor(getResources().getColor(R.color.colorBottomSelected));//第一次进入的时候讲选中的Tab修改文字颜色
+        ((TextView) tabHost.getCurrentTabView().findViewById(R.id.tv_indicator)).setTextColor(
+                getResources().getColor(R.color.colorBottomSelected));//第一次进入的时候讲选中的Tab修改文字颜色
 
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_search, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
         return true;
     }
 

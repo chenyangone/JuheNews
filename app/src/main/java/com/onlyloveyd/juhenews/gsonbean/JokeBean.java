@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.onlyloveyd.juhenews.gsonbean.jokebean;
+package com.onlyloveyd.juhenews.gsonbean;
+
+import com.onlyloveyd.juhenews.decorate.Visitable;
+import com.onlyloveyd.juhenews.factory.TypeFactory;
 
 import java.util.List;
 
@@ -70,7 +73,7 @@ public class JokeBean {
     }
 
 
-    public static class Data {
+    public static class Data implements Visitable {
 
         private String content;
         private String hashid;
@@ -109,6 +112,10 @@ public class JokeBean {
             this.updatetime = updatetime;
         }
 
+        @Override
+        public int type(TypeFactory typeFactory) {
+            return typeFactory.type(this);
+        }
     }
 
 }

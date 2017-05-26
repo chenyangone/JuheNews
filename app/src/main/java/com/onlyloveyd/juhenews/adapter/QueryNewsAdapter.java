@@ -15,9 +15,10 @@
  */
 package com.onlyloveyd.juhenews.adapter;
 
+import static android.view.View.GONE;
+
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,17 +28,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.onlyloveyd.juhenews.R;
+import com.onlyloveyd.juhenews.activity.WebActivity;
+import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import com.onlyloveyd.juhenews.R;
-import com.onlyloveyd.juhenews.activity.WebActivity;
-import com.onlyloveyd.juhenews.gsonbean.querynewsbean.QueryNewsBean;
-
-import static android.view.View.GONE;
 
 /**
  * 文 件 名: QueryNewsAdapter
@@ -55,7 +53,8 @@ public class QueryNewsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.newsitem, null, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_news_item, null,
+                false);
         return (new NewsViewHolder(view));
     }
 
@@ -71,8 +70,6 @@ public class QueryNewsAdapter extends RecyclerView.Adapter {
 
             String pic1path = data.getImg();
             if (pic1path != null) {
-                AnimationDrawable animationDrawable = (AnimationDrawable) context.getResources().getDrawable(R.drawable.image_loading);
-                animationDrawable.start();
                 Glide.with(context).load(pic1path).into(newsViewHolder.pic1);
             } else {
                 newsViewHolder.pic1.setVisibility(GONE);

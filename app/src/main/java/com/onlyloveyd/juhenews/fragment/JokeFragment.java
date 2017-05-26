@@ -15,26 +15,12 @@
  */
 package com.onlyloveyd.juhenews.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.onlyloveyd.juhenews.gsonbean.JokeBean;
+import com.onlyloveyd.juhenews.retrofit.Retrofitance;
 
-import com.google.gson.Gson;
-import com.onlyloveyd.juhenews.adapter.JokeAdapter;
-import com.onlyloveyd.juhenews.gsonbean.jokebean.JokeBean;
-import com.onlyloveyd.juhenews.utils.OkHttpUtils;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 文 件 名: JokeFragment
@@ -47,60 +33,58 @@ import io.reactivex.schedulers.Schedulers;
 
 @SuppressWarnings("deprecation")
 public class JokeFragment extends BaseFragment {
-    private JokeAdapter jokeAdapter;
+    int pagenum = 1;
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false);
-        jokeAdapter = new JokeAdapter();
+    public void initBGAData() {
+        bgaRefreshLayout.beginRefreshing();
+    }
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(jokeAdapter);
-        return view;
+    public void getContent(int pagenum) {
+        Observer<JokeBean> observer = new Observer<JokeBean>() {
+            @Override
+            public void onComplete() {
+                endLoading();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                endLoading();
+                onNetworkError();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(JokeBean jokeBean) {
+                if (bgaRefreshLayout.isLoadingMore()) {
+                } else {
+                    mVisitableList.clear();
+                }
+                if (jokeBean.getResult() == null || jokeBean.getResult().getData() == null
+                        || jokeBean.getResult().getData().size() == 0) {
+                    onDataEmpty();
+                } else {
+                    mVisitableList.addAll(jokeBean.getResult().getData());
+                }
+                mMultiRecyclerAdapter.setData(mVisitableList);
+            }
+        };
+        Retrofitance.getInstance().getJoke(observer, pagenum);
     }
 
     @Override
-    public void pullData() {
-        super.pullData();
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception {
-                String response = OkHttpUtils.getJokes(mPageNum);
-                emitter.onNext(response);
-                emitter.onComplete();
-            }
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        getContent(1);
+    }
 
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(String response) {
-                        Gson gson = new Gson();
-                        JokeBean jokeBean = gson.fromJson(response, JokeBean.class);
-                        jokeAdapter.addJokeData(jokeBean);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        onDataPullFinished();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onErrorReceived();
-                        e.printStackTrace();
-                    }
-                });
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        getContent(++pagenum);
+        return true;
     }
 }

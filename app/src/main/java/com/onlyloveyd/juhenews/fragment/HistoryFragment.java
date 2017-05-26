@@ -15,28 +15,12 @@
  */
 package com.onlyloveyd.juhenews.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import com.onlyloveyd.juhenews.gsonbean.HistoryBean;
+import com.onlyloveyd.juhenews.retrofit.Retrofitance;
 
-import com.google.gson.Gson;
-import com.onlyloveyd.juhenews.adapter.HistoryAdapter;
-import com.onlyloveyd.juhenews.gsonbean.historybean.HistoryBean;
-import com.onlyloveyd.juhenews.utils.OkHttpUtils;
-
-import butterknife.ButterKnife;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 文 件 名: HistoryFragment
@@ -49,65 +33,51 @@ import io.reactivex.schedulers.Schedulers;
 
 @SuppressWarnings("deprecation")
 public class HistoryFragment extends BaseFragment {
-    private HistoryAdapter historyAdapter;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, view);
-
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL);
-        historyAdapter = new HistoryAdapter();
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        recyclerView.setAdapter(historyAdapter);
-        return view;
+    public void initBGAData() {
+        bgaRefreshLayout.beginRefreshing();
     }
 
-
-    @Override
-    public void pullData() {
-        super.pullData();
-        Observable.create(new ObservableOnSubscribe<String>() {
-
+    public void getContent() {
+        Observer<HistoryBean> observer = new Observer<HistoryBean>() {
             @Override
-            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception {
-                String response = OkHttpUtils.getHistory();
-                emitter.onNext(response);
-                emitter.onComplete();
+            public void onComplete() {
+                endLoading();
             }
 
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                endLoading();
+                onNetworkError();
+            }
 
-                    }
+            @Override
+            public void onSubscribe(Disposable d) {
 
-                    @Override
-                    public void onNext(String response) {
-                        Gson gson = new Gson();
-                        HistoryBean historyBean = gson.fromJson(response, HistoryBean.class);
-                        historyAdapter.addHistoryData(historyBean);
-                    }
+            }
 
-                    @Override
-                    public void onComplete() {
-                        onDataPullFinished();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onErrorReceived();
-                        e.printStackTrace();
-                    }
-                });
+            @Override
+            public void onNext(HistoryBean historyBean) {
+                if (bgaRefreshLayout.isLoadingMore()) {
+                } else {
+                    mVisitableList.clear();
+                }
+                if (historyBean.getResult() == null || historyBean.getResult().size() == 0) {
+                    onDataEmpty();
+                } else {
+                    mVisitableList.addAll(historyBean.getResult());
+                }
+                mMultiRecyclerAdapter.setData(mVisitableList);
+            }
+        };
+        Retrofitance.getInstance().getHistory(observer);
     }
 
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        getContent();
+    }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {

@@ -6,4 +6,6 @@
     <string name="joke_title">笑话大全</string>
     <string name="funny_title">趣 图</string>
     <string name="history_title">历史上的今天</string>
+
+    <string name="empty_data">这里空空的什么都没有呢...</string>
 </resources>

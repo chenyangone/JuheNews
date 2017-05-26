@@ -145,3 +145,7 @@
 -keepclasseswithmembers class * {
     @android.support.annotation.Keep <init>(...);
 }
+
+# Retrofit
+-dontwarn okio.**
+-dontwarn javax.annotation.**

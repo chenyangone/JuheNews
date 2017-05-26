@@ -24,12 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.onlyloveyd.juhenews.R;
+import com.onlyloveyd.juhenews.adapter.NewsPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import com.onlyloveyd.juhenews.R;
-import com.onlyloveyd.juhenews.adapter.NewsPagerAdapter;
 
 /**
  * 文 件 名: ZixunFragment
@@ -49,7 +48,8 @@ public class ZixunFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_zixun, container, false);
         ButterKnife.bind(this, view);
         viewPager.setAdapter(new NewsPagerAdapter(getFragmentManager()));

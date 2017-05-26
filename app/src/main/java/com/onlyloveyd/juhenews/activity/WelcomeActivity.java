@@ -27,6 +27,14 @@ import android.widget.TextView;
 
 import com.onlyloveyd.juhenews.R;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * 文 件 名: WelcomeActivity
@@ -37,15 +45,6 @@ import com.onlyloveyd.juhenews.R;
  * 描   述：欢迎页
  */
 public class WelcomeActivity extends AppCompatActivity {
-
-    private final Handler splashHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            directToHome();
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +56,32 @@ public class WelcomeActivity extends AppCompatActivity {
         textViewSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                splashHandler.removeMessages(0);
                 directToHome();
             }
         });
-        splashHandler.sendEmptyMessageDelayed(0, 3000);
+        Observable.timer(2000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Long aLong) {
+                        directToHome();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void directToHome() {

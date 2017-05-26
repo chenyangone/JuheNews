@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.onlyloveyd.juhenews.gsonbean.querynewsbean;
+package com.onlyloveyd.juhenews.gsonbean;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.onlyloveyd.juhenews.decorate.Visitable;
+import com.onlyloveyd.juhenews.factory.TypeFactory;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,7 +36,32 @@ import java.util.List;
 public class QueryNewsBean {
     /**
      * reason : 查询成功
-     * result : [{"title":"Jr·NBA2016邀请赛上海中学国际部喜夺冠","content":"日前,NBA中国举办的\"Jr·NBA2016邀请赛\"于上海协和<em>国际<\/em>学校进行,上海中学<em>国际<\/em>部(SHSID)获得冠军。这是NBA青少年篮球发展项目,也是与教育部战略合作的重要组成部分。  本次赛事参赛对象为14岁及以下的篮球爱好者,共有来自不同学校及俱乐部的百余位小球员组成的8支球队参...","img_width":"","full_title":"Jr·NBA2016邀请赛上海中学国际部喜夺冠","pdate":"27分钟前","src":"国家体育总局","img_length":"","img":"","url":"http://www.sport.gov.cn/n318/n352/c780634/content.html","pdate_src":"2016-12-15 13:14:27"},{"title":"中国青年设计师作品在法国国际建筑设计大赛中获佳绩","content":"新华社巴黎12月14日电(记者张雪飞)由法国雅克·鲁热里基金会和法国研究院(也称法兰西学会)共同举办的第六届<em>国际<\/em>建筑设计大赛颁奖典礼14日晚在位于巴黎的法国研究院举行。两支有中国青年建筑设计师参与的<em>国际<\/em>团队的设计方案分别在两大竞赛单元获得奖项。  这项<em>国际<\/em>建筑设...","img_width":"","full_title":"中国青年设计师作品在法国国际建筑设计大赛中获佳绩","pdate":"29分钟前","src":"新华网","img_length":"","img":"","url":"http://news.xinhuanet.com/world/2016-12/15/c_1120123943.htm","pdate_src":"2016-12-15 13:12:43"},{"title":"(国际)特稿:俄西\"多方博弈\"与\"有限合作\"","content":"当然,尽管俄罗斯与美国等西方国家关系目前还处于几十年来的最低水平,但在打击<em>国际<\/em>恐怖主义、应对欧洲难民危机、维护网络安全与核不扩散等问题上,双方都将不可避免地进行磋商与合作。  可以预见的是,在涉及国家根本利益的时候,美国无法接受有朝一日与俄罗斯平起平坐。而这势...","img_width":"","full_title":"(国际)特稿:俄西\"多方博弈\"与\"有限合作\"","pdate":"35分钟前","src":"和讯网","img_length":"","img":"","url":"http://news.hexun.com/2016-12-15/187356687.html","pdate_src":"2016-12-15 13:07:00"},{"title":"中国学子在法国国际建筑设计大赛斩获佳绩","content":"来自广州的崔子成在颁奖仪式后对记者表示:\"这一比赛主题特殊,面向未来。我对获奖感到很高兴,将来会脚踏实地,继续努力,争取参加更高层次、更加<em>国际<\/em>化的建筑设计比赛。\" 据介绍,\"雅克·鲁热里基金会\"基金会由法兰西学院院士、海洋建筑设计师雅克·鲁热里创建。该基金会主办一...","img_width":"360","full_title":"中国学子在法国国际建筑设计大赛斩获佳绩","pdate":"47分钟前","src":"环球网","img_length":"540","img":"http://p1.qhimg.com/t01fef364960a2f5573.jpg","url":"http://society.huanqiu.com/shrd/2016-12/9815077.html","pdate_src":"2016-12-15 12:55:00"}]
+     * result : [{"title":"Jr·NBA2016邀请赛上海中学国际部喜夺冠","content":"日前,
+     * NBA中国举办的\"Jr·NBA2016邀请赛\"于上海协和<em>国际<\/em>学校进行,上海中学<em>国际<\/em>部(SHSID)
+     * 获得冠军。这是NBA青少年篮球发展项目,也是与教育部战略合作的重要组成部分。
+     *  本次赛事参赛对象为14岁及以下的篮球爱好者,共有来自不同学校及俱乐部的百余位小球员组成的8支球队参...","img_width":"",
+     *  "full_title":"Jr·NBA2016邀请赛上海中学国际部喜夺冠","pdate":"27分钟前","src":"国家体育总局","img_length":"",
+     *  "img":"","url":"http://www.sport.gov.cn/n318/n352/c780634/content.html",
+     *  "pdate_src":"2016-12-15
+     * 13:14:27"},{"title":"中国青年设计师作品在法国国际建筑设计大赛中获佳绩","content":"新华社巴黎12月14日电(记者张雪飞)
+     * 由法国雅克·鲁热里基金会和法国研究院(也称法兰西学会)
+     * 共同举办的第六届<em>国际<\/em>建筑设计大赛颁奖典礼14日晚在位于巴黎的法国研究院举行。两支有中国青年建筑设计师参与的<em>国际<\/em
+     * >团队的设计方案分别在两大竞赛单元获得奖项。
+     *  这项<em>国际<\/em>建筑设...","img_width":"","full_title":"中国青年设计师作品在法国国际建筑设计大赛中获佳绩",
+     *  "pdate":"29分钟前","src":"新华网","img_length":"","img":"","url":"http://news.xinhuanet
+     *  .com/world/2016-12/15/c_1120123943.htm","pdate_src":"2016-12-15
+     * 13:12:43"},{"title":"(国际)特稿:俄西\"多方博弈\"与\"有限合作\"","content":"当然,
+     * 尽管俄罗斯与美国等西方国家关系目前还处于几十年来的最低水平,但在打击<em>国际<\/em>恐怖主义、应对欧洲难民危机、维护网络安全与核不扩散等问题上,双方都将不可避免地进行磋商与合作。
+     *  可以预见的是,在涉及国家根本利益的时候,美国无法接受有朝一日与俄罗斯平起平坐。而这势...","img_width":"","full_title":"(国际)
+     *  特稿:俄西\"多方博弈\"与\"有限合作\"","pdate":"35分钟前","src":"和讯网","img_length":"","img":"",
+     *  "url":"http://news.hexun.com/2016-12-15/187356687.html","pdate_src":"2016-12-15
+     * 13:07:00"},{"title":"中国学子在法国国际建筑设计大赛斩获佳绩","content":"来自广州的崔子成在颁奖仪式后对记者表示:\"这一比赛主题特殊,
+     * 面向未来。我对获奖感到很高兴,将来会脚踏实地,继续努力,争取参加更高层次、更加<em>国际<\/em>化的建筑设计比赛。\"
+     * 据介绍,\"雅克·鲁热里基金会\"基金会由法兰西学院院士、海洋建筑设计师雅克·鲁热里创建。该基金会主办一...","img_width":"360",
+     * "full_title":"中国学子在法国国际建筑设计大赛斩获佳绩","pdate":"47分钟前","src":"环球网","img_length":"540",
+     * "img":"http://p1.qhimg.com/t01fef364960a2f5573.jpg","url":"http://society.huanqiu
+     * .com/shrd/2016-12/9815077.html","pdate_src":"2016-12-15
+     * 12:55:00"}]
      * error_code : 0
      */
 
@@ -79,10 +106,12 @@ public class QueryNewsBean {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Visitable {
         /**
          * title : Jr·NBA2016邀请赛上海中学国际部喜夺冠
-         * content : 日前,NBA中国举办的"Jr·NBA2016邀请赛"于上海协和<em>国际</em>学校进行,上海中学<em>国际</em>部(SHSID)获得冠军。这是NBA青少年篮球发展项目,也是与教育部战略合作的重要组成部分。  本次赛事参赛对象为14岁及以下的篮球爱好者,共有来自不同学校及俱乐部的百余位小球员组成的8支球队参...
+         * content : 日前,NBA中国举办的"Jr·NBA2016邀请赛"于上海协和<em>国际</em>学校进行,上海中学<em>国际</em>部(SHSID)
+         * 获得冠军。这是NBA青少年篮球发展项目,也是与教育部战略合作的重要组成部分。
+         * 本次赛事参赛对象为14岁及以下的篮球爱好者,共有来自不同学校及俱乐部的百余位小球员组成的8支球队参...
          * img_width :
          * full_title : Jr·NBA2016邀请赛上海中学国际部喜夺冠
          * pdate : 27分钟前
@@ -196,6 +225,11 @@ public class QueryNewsBean {
 
         public void setPdate_src(String pdate_src) {
             this.pdate_src = pdate_src;
+        }
+
+        @Override
+        public int type(TypeFactory typeFactory) {
+            return typeFactory.type(this);
         }
     }
 }

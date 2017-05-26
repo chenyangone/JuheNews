@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.onlyloveyd.juhenews.gsonbean.newsbean;
+package com.onlyloveyd.juhenews.gsonbean;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.onlyloveyd.juhenews.decorate.Visitable;
+import com.onlyloveyd.juhenews.factory.TypeFactory;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -110,7 +112,7 @@ public class NewsBean {
             this.data = data;
         }
 
-        public static class DataBean {
+        public static class DataBean implements Visitable {
             private String title;
             private String date;
             private String author_name;
@@ -215,6 +217,11 @@ public class NewsBean {
 
             public void setRealtype(String realtype) {
                 this.realtype = realtype;
+            }
+
+            @Override
+            public int type(TypeFactory typeFactory) {
+                return typeFactory.type(this);
             }
         }
     }

@@ -15,8 +15,8 @@
  */
 package com.onlyloveyd.juhenews.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,15 +24,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.onlyloveyd.juhenews.R;
+import com.onlyloveyd.juhenews.adapter.MultiRecyclerAdapter;
+import com.onlyloveyd.juhenews.adapter.QueryNewsAdapter;
+import com.onlyloveyd.juhenews.decorate.Visitable;
+import com.onlyloveyd.juhenews.gsonbean.EmptyBean;
+import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
+import com.onlyloveyd.juhenews.retrofit.Retrofitance;
+import com.onlyloveyd.juhenews.utils.OkHttpUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -42,11 +56,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import com.onlyloveyd.juhenews.R;
-import com.onlyloveyd.juhenews.adapter.QueryNewsAdapter;
-import com.onlyloveyd.juhenews.gsonbean.querynewsbean.QueryNewsBean;
-import com.onlyloveyd.juhenews.utils.OkHttpUtils;
-
 /**
  * 文 件 名: SearchActivity
  * 创 建 人: 易冬
@@ -55,99 +64,125 @@ import com.onlyloveyd.juhenews.utils.OkHttpUtils;
  * 博   客: http://onlyloveyd.github.io
  * 描   述：热点搜索
  */
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements
+        BGARefreshLayout.BGARefreshLayoutDelegate {
+
 
     @BindView(R.id.et_search)
-    EditText etSearch;
-    @BindView(R.id.rv_searchResult)
-    RecyclerView rvSearchResult;
-    @BindView(R.id.toolbar_search)
-    Toolbar toolbarSearch;
+    EditText mEtSearch;
     @BindView(R.id.tv_search)
-    TextView tvSearch;
+    TextView mTvSearch;
+    @BindView(R.id.toolbar_search)
+    Toolbar mToolbarSearch;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
+    @BindView(R.id.search_bga_refresh)
+    BGARefreshLayout mSearchBgaRefresh;
+    @BindView(R.id.activity_search)
+    LinearLayout mActivitySearch;
 
-    QueryNewsAdapter queryNewsAdapter;
-    ProgressDialog loadingDialog = null;
+    MultiRecyclerAdapter mMultiRecyclerAdapter;
+    List<Visitable> mVisitableList = new ArrayList<>();
+    private String keyword = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+        mToolbarSearch.setNavigationIcon(R.drawable.back);
+        setSupportActionBar(mToolbarSearch);
+        initBGALayout();
+        initRvContent();
+    }
 
+    private void initBGALayout() {
+        // 为BGARefreshLayout 设置代理
+        mSearchBgaRefresh.setDelegate(this);
+        // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
+        BGANormalRefreshViewHolder refreshViewHolder =
+                new BGANormalRefreshViewHolder(this, true);
+        refreshViewHolder.setLoadingMoreText("加载更多");
+        refreshViewHolder.setLoadMoreBackgroundColorRes(R.color.white);
+        refreshViewHolder.setRefreshViewBackgroundColorRes(R.color.white);
+        mSearchBgaRefresh.setRefreshViewHolder(refreshViewHolder);
+    }
 
-        loadingDialog = new ProgressDialog(this);
-        loadingDialog.setIndeterminate(true);
-        loadingDialog.setTitle("提示");
-        loadingDialog.setMessage("正在加载...");
-        loadingDialog.setCancelable(true);
-
-        toolbarSearch.setNavigationIcon(R.drawable.back);
-        setSupportActionBar(toolbarSearch);
-
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        queryNewsAdapter = new QueryNewsAdapter();
-        rvSearchResult.setAdapter(queryNewsAdapter);
-        rvSearchResult.setLayoutManager(linearLayoutManager);
-
+    private void initRvContent() {
+        LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
+                false);
+        mMultiRecyclerAdapter = new MultiRecyclerAdapter(null);
+        mRvContent.setLayoutManager(llm);
+        mRvContent.setAdapter(mMultiRecyclerAdapter);
     }
 
     @OnClick({R.id.tv_search})
     public void onClick() {
-        loadingDialog.show();
-        if (etSearch.getText().toString() != null) {
-            Observable.create(new ObservableOnSubscribe<String>() {
-                @Override
-                public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception {
-                    String response = OkHttpUtils.getCurrentNews(etSearch.getText().toString());
-                    emitter.onNext(response);
-                    emitter.onComplete();
-                }
-
-            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
-                @Override
-                public void onSubscribe(@NonNull Disposable d) {
-
-                }
-
-                @Override
-                public void onNext(String response) {
-                    Gson gson = new Gson();
-                    queryNewsAdapter.setQueryNews(gson.fromJson(response, QueryNewsBean.class));
-                }
-
-                @Override
-                public void onComplete() {
-                    if (loadingDialog.isShowing()) {
-                        loadingDialog.cancel();
-                    }
-                    if (rvSearchResult.getAdapter().getItemCount() == 0) {
-                        Toast toast = Toast.makeText(SearchActivity.this, "Sorry, 没有搜索到任何东西", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    //handle exception
-                    e.printStackTrace();
-                }
-            });
-
+        if (mEtSearch.getText().toString() != null) {
+            queryNews(mEtSearch.getText().toString());
         }
+    }
+
+
+    private void queryNews(String keyword) {
+        Observer<QueryNewsBean> subscriber = new Observer<QueryNewsBean>() {
+            @Override
+            public void onComplete() {
+                if (mSearchBgaRefresh.isLoadingMore()) {
+                    mSearchBgaRefresh.endLoadingMore();
+                } else {
+                    mSearchBgaRefresh.endRefreshing();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                if (mSearchBgaRefresh.isLoadingMore()) {
+                    mSearchBgaRefresh.endLoadingMore();
+                } else {
+                    mSearchBgaRefresh.endRefreshing();
+                }
+                mVisitableList.clear();
+                EmptyBean emptyBean = new EmptyBean();
+                emptyBean.setMessage("网络请求错误");
+                mVisitableList.add(0, emptyBean);
+                mMultiRecyclerAdapter.setData(mVisitableList);
+            }
+
+            @Override
+            public void onSubscribe(@android.support.annotation.NonNull Disposable d) {
+
+            }
+
+            @Override
+        public void onNext(QueryNewsBean queryNewsBean) {
+                if (mSearchBgaRefresh.isLoadingMore()) {
+                } else {
+                    mVisitableList.clear();
+                }
+                if (queryNewsBean.getResult() == null || queryNewsBean.getResult().size() == 0) {
+                    EmptyBean emptyBean = new EmptyBean();
+                    emptyBean.setMessage("没有搜到什么东西，怎么办？");
+                    mVisitableList.add(0, emptyBean);
+                } else {
+                    mVisitableList.addAll(queryNewsBean.getResult());
+                }
+                mMultiRecyclerAdapter.setData(mVisitableList);
+            }
+        };
+        Retrofitance.getInstance().getQueryNews(subscriber, keyword);
     }
 
     @OnTextChanged(R.id.et_search)
     public void onTextChange(CharSequence text) {
-        if (text.toString() == null || text.length() == 0) {
-            tvSearch.setTextColor(getResources().getColor(R.color.colorComment));
-            tvSearch.setClickable(false);
+        keyword = text.toString();
+        if (text.toString().equals("") || text.length() == 0) {
+            mTvSearch.setTextColor(getResources().getColor(R.color.colorToolbar));
+            mTvSearch.setClickable(false);
         } else {
-            tvSearch.setTextColor(getResources().getColor(R.color.colorBlack));
-            tvSearch.setClickable(true);
+            mTvSearch.setTextColor(getResources().getColor(R.color.colorWhite));
+            mTvSearch.setClickable(true);
         }
     }
 
@@ -161,5 +196,15 @@ public class SearchActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        queryNews(keyword);
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
     }
 }
