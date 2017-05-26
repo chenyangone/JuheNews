@@ -16,27 +16,21 @@
 package com.onlyloveyd.juhenews.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.onlyloveyd.juhenews.R;
 import com.onlyloveyd.juhenews.adapter.MultiRecyclerAdapter;
-import com.onlyloveyd.juhenews.adapter.QueryNewsAdapter;
 import com.onlyloveyd.juhenews.decorate.Visitable;
 import com.onlyloveyd.juhenews.gsonbean.EmptyBean;
 import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
 import com.onlyloveyd.juhenews.retrofit.Retrofitance;
-import com.onlyloveyd.juhenews.utils.OkHttpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +41,8 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 文 件 名: SearchActivity

@@ -15,7 +15,6 @@
  */
 package com.onlyloveyd.juhenews.viewholder;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
