@@ -65,7 +65,7 @@ public class NewsViewHolder extends BaseViewHolder<NewsBean.ResultBean.DataBean>
 
         String pic1path = data.getThumbnail_pic_s();
         if (pic1path != null) {
-            Glide.with(itemView.getContext()).load(pic1path).into(imageView);
+            Glide.with(itemView.getContext()).load(pic1path).placeholder(R.mipmap.empty_data).into(imageView);
         } else {
             imageView.setVisibility(GONE);
         }

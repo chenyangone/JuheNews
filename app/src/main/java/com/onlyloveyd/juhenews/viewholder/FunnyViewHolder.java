@@ -50,7 +50,7 @@ public class FunnyViewHolder extends BaseViewHolder<FunnyBean.ResultBean.DataBea
         final String pic = data.getUrl();
         if (pic != null && !pic.isEmpty()) {
 
-            Glide.with(itemView.getContext()).load(pic).into(imageView);
+            Glide.with(itemView.getContext()).load(pic).placeholder(R.mipmap.empty_data).into(imageView);
         } else {
             imageView.setVisibility(View.GONE);
         }
