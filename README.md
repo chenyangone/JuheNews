@@ -37,7 +37,6 @@
 * [Gson](https://github.com/google/gson)
 * [ButterKnife](https://github.com/JakeWharton/butterknife)
 * [BGARefreshLayout-Android](https://github.com/bingoogolapple/BGARefreshLayout-Android)
-* [FlycoTabLayout](https://github.com/H07000223/FlycoTabLayout)
 
 ## Author
 * [CSDN](http://blog.csdn.net/poorkick)
