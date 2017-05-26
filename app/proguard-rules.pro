@@ -39,7 +39,7 @@
 
 -dontwarn org.immutables.gson.**
 -keep class org.immutables.gson.** { *;}
--keep class jzfp.gs.com.juhenews.gsonbean.**{*;}
+-keep class com.onlyloveyd.juhenews.gsonbean.**{*;}
 
 #okhttp
 -keepattributes Signature

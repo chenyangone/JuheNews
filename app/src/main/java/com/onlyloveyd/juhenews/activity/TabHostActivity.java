@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.onlyloveyd.juhenews.R;
 
@@ -46,6 +47,11 @@ public class TabHostActivity extends AppCompatActivity {
     TabHost tabHost = null;
     @BindView(R.id.toolbar)
     Toolbar toolbar = null;
+
+    /**
+     * 再次返回键退出程序
+     */
+    private long lastBack = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +143,16 @@ public class TabHostActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (lastBack == 0 || System.currentTimeMillis() - lastBack > 2000) {
+            Toast.makeText(this, "再按一次返回退出程序", Toast.LENGTH_SHORT).show();
+            lastBack = System.currentTimeMillis();
+            return;
+        }
+        super.onBackPressed();
     }
 
 }

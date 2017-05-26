@@ -21,9 +21,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.onlyloveyd.juhenews.R;
 import com.onlyloveyd.juhenews.adapter.MultiRecyclerAdapter;
@@ -58,8 +58,8 @@ public class SearchActivity extends AppCompatActivity implements
 
     @BindView(R.id.et_search)
     EditText mEtSearch;
-    @BindView(R.id.tv_search)
-    TextView mTvSearch;
+    @BindView(R.id.bt_search)
+    Button mBtSearch;
     @BindView(R.id.toolbar_search)
     Toolbar mToolbarSearch;
     @BindView(R.id.rv_content)
@@ -104,9 +104,10 @@ public class SearchActivity extends AppCompatActivity implements
         mRvContent.setAdapter(mMultiRecyclerAdapter);
     }
 
-    @OnClick({R.id.tv_search})
+    @OnClick({R.id.bt_search})
     public void onClick() {
-        if (mEtSearch.getText().toString() != null) {
+        if (!mEtSearch.getText().toString().equals("")) {
+            mSearchBgaRefresh.beginRefreshing();
             queryNews(mEtSearch.getText().toString());
         }
     }
@@ -144,7 +145,7 @@ public class SearchActivity extends AppCompatActivity implements
             }
 
             @Override
-        public void onNext(QueryNewsBean queryNewsBean) {
+            public void onNext(QueryNewsBean queryNewsBean) {
                 if (mSearchBgaRefresh.isLoadingMore()) {
                 } else {
                     mVisitableList.clear();
@@ -166,11 +167,11 @@ public class SearchActivity extends AppCompatActivity implements
     public void onTextChange(CharSequence text) {
         keyword = text.toString();
         if (text.toString().equals("") || text.length() == 0) {
-            mTvSearch.setTextColor(getResources().getColor(R.color.colorToolbar));
-            mTvSearch.setClickable(false);
+            mBtSearch.setTextColor(getResources().getColor(R.color.colorToolbar));
+            mBtSearch.setClickable(false);
         } else {
-            mTvSearch.setTextColor(getResources().getColor(R.color.colorWhite));
-            mTvSearch.setClickable(true);
+            mBtSearch.setTextColor(getResources().getColor(R.color.colorWhite));
+            mBtSearch.setClickable(true);
         }
     }
 

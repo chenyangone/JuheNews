@@ -1,18 +1,51 @@
-# JuheNews
-<font size=4>根据聚合数据API提供的免费接口实现一个自己的应用，主要采用了RxAndroid响应式编程，和Material Design库中的一些内容，同时添加了部分开源库，实现一些基本简单的效果，希望各位指正交流！</br></br>
-目前 有5个模块：</br></br>
-1. 新闻头条</br></br>
-2. 笑话大全</br></br>
-3. 趣味图片</br></br>
-4. 历史上的今天</br></br>
-5. 新闻热点搜索</br></br>
-其中，新闻头条分为"头条","社会","国内","国际","娱乐","体育","军事","科技","财经","时尚"等十个模块，每个模块对应不同的新闻内容；趣味图片支持Gif的播放；历史上的今天帮助大家了解今天的历史。
+# 聚闻
+![icon](/app/src/main/res/mipmap-xxhdpi/ic_launcher.png "")
+
+使用聚合新闻数据而成的新闻资讯客户端
+
+## 下载
+[fir](https://fir.im/JuKan)
+
+## 数据源
+数据来源于：聚合数据，接口每天请求数量受限
+
+## App设计
+黑白红，红色采用的是今日头条的红色
+
+## UI设计
+1. 黑白红
+2. 圆角
+3. 材料设计
+
+## 代码设计
+1. Retrofit+RxJava 的组合获取网络数据;
+2. TabHost + Fragment 作为主界面结构,实现“资讯”，“笑话”，“趣图”，“历史上的今天”四个模块
+3. BGARefreshLayout配合RecyclerView和自定义多类型Item结构实现干货数据的展示;
+4. Glide作为图片加载框架；
+5. RxJava+Retrofit配合fir.im的接口实现版本更新功能；
+6. Share功能全部采用系统自带，基本可以满足需求。
+7. ButterKnife注解库
+8. Gson作为json数据解析库
 
 
-</font>
-</br></br>
-<font color=bule size=5>目前效果图</font></br></br>
+## 依赖库
+* [Glide](https://github.com/bumptech/glide)
+* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [Retrofit](https://github.com/square/retrofit)
+* [okhttp3](https://github.com/square/okhttp)
+* [Gson](https://github.com/google/gson)
+* [ButterKnife](https://github.com/JakeWharton/butterknife)
+* [BGARefreshLayout-Android](https://github.com/bingoogolapple/BGARefreshLayout-Android)
+* [FlycoTabLayout](https://github.com/H07000223/FlycoTabLayout)
 
+## Author
+* [CSDN](http://blog.csdn.net/poorkick)
+* [Website](http://www.onlyloveyd.cn/)
+* [掘金](https://juejin.im/user/583e860867f356006bbedb90)
+* ![个人公众号](/app/src/main/res/mipmap-xxhdpi/qrcode.jpg "")
+
+## 效果图
 ![实际效果图](https://github.com/onlyloveyd/JuheNews/blob/master/gif/GIF1.gif)
 ![实际效果图](https://github.com/onlyloveyd/JuheNews/blob/master/gif/GIF2.gif)
 ![实际效果图](https://github.com/onlyloveyd/JuheNews/blob/master/gif/GIF3.gif)
