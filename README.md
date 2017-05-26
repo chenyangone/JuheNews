@@ -46,7 +46,5 @@
 * ![个人公众号](/app/src/main/res/mipmap-xxhdpi/qrcode.jpg "")
 
 ## 效果图
-![实际效果图](/screenshot/Screenshot_1495788428.png "")
-![实际效果图](/screenshot/Screenshot_1495788432.png "")
-![实际效果图](/screenshot/Screenshot_1495788435.png "")
-![实际效果图](/screenshot/Screenshot_1495788438.png "")
+![实际效果图](/screenshot/Screenshot_1495788428.png "")![实际效果图](/screenshot/Screenshot_1495788432.png "")
+![实际效果图](/screenshot/Screenshot_1495788435.png "")![实际效果图](/screenshot/Screenshot_1495788438.png "")
