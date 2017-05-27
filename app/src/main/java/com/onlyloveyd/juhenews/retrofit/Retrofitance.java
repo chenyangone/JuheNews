@@ -23,6 +23,7 @@ import com.onlyloveyd.juhenews.gsonbean.JokeBean;
 import com.onlyloveyd.juhenews.gsonbean.NewsBean;
 import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
 
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -96,10 +97,9 @@ public class Retrofitance {
      * 获取历史上的今天
      */
     public void getHistory(Observer<HistoryBean> subscriber) {
-        Time time = new Time("GMT+8");
-        time.setToNow();
+        Calendar now = Calendar.getInstance();
         String URL = "http://api.juheapi.com/japi/toh?key=e5819f08efaa65bc97a7ef93de55cc46&v=1.0"
-                + "&month=" + (time.month + 1) + "&day=" + time.monthDay;
+                + "&month=" + (now.get(Calendar.MONTH) + 1) + "&day=" + now.get(Calendar.DAY_OF_MONTH);
         commonOp(mJuheApi.getTodayInHistory(URL),subscriber);
     }
 
