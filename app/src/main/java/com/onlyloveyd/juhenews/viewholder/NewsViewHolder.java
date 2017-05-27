@@ -38,14 +38,6 @@ import butterknife.BindView;
  * 描   述：
  */
 public class NewsViewHolder extends BaseViewHolder<NewsBean.ResultBean.DataBean> {
-    @BindView(R.id.tv_news_title)
-    public TextView title;
-    @BindView(R.id.tv_news_author)
-    public TextView author;
-    @BindView(R.id.tv_news_date)
-    public TextView date;
-    @BindView(R.id.iv_news_pic1)
-    public ImageView pic1;
     public NewsViewHolder(View itemView) {
         super(itemView);
     }
@@ -70,7 +62,6 @@ public class NewsViewHolder extends BaseViewHolder<NewsBean.ResultBean.DataBean>
             imageView.setVisibility(GONE);
         }
 
-        final String url = data.getUrl();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -43,6 +43,7 @@ import io.reactivex.disposables.Disposable;
  * 描   述：欢迎页
  */
 public class WelcomeActivity extends AppCompatActivity {
+    private boolean isSkipped = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,7 @@ public class WelcomeActivity extends AppCompatActivity {
         textViewSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isSkipped = true;
                 directToHome();
             }
         });
@@ -67,7 +69,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(@NonNull Long aLong) {
-                        directToHome();
+                        if (!isSkipped) {
+                            directToHome();
+                        }
                     }
 
                     @Override

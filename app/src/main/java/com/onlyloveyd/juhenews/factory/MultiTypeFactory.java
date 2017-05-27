@@ -30,6 +30,7 @@ import com.onlyloveyd.juhenews.viewholder.FunnyViewHolder;
 import com.onlyloveyd.juhenews.viewholder.HistoryViewHolder;
 import com.onlyloveyd.juhenews.viewholder.JokeViewHolder;
 import com.onlyloveyd.juhenews.viewholder.NewsViewHolder;
+import com.onlyloveyd.juhenews.viewholder.QueryNewsViewHolder;
 
 /**
  * 文 件 名: MultiTypeFactory
@@ -45,6 +46,7 @@ public class MultiTypeFactory implements TypeFactory {
     final int HISTORY_ITEM_LAYOUT_ID = R.layout.rv_history_item;
     final int JOKE_ITEM_LAYOUT_ID = R.layout.rv_joke_item;
     final int EMPTY_ITEM_LAYOUT_ID = R.layout.rv_empty_item;
+    final int QUERYNEWS_ITEM_LAYOUT_ID = R.layout.rv_querynews_item;
 
     @Override
     public int type(NewsBean.ResultBean.DataBean newsBean) {
@@ -73,7 +75,7 @@ public class MultiTypeFactory implements TypeFactory {
 
     @Override
     public int type(QueryNewsBean.ResultBean queryNewsBean) {
-        return NEWS_ITEM_LAYOUT_ID;
+        return QUERYNEWS_ITEM_LAYOUT_ID;
     }
 
     @Override
@@ -89,6 +91,8 @@ public class MultiTypeFactory implements TypeFactory {
                 return new HistoryViewHolder(itemView);
             case EMPTY_ITEM_LAYOUT_ID:
                 return new EmptyViewHolder(itemView);
+            case QUERYNEWS_ITEM_LAYOUT_ID:
+                return new QueryNewsViewHolder(itemView);
             default:
                 throw new IllegalStateException("incorrect layout type");
         }
