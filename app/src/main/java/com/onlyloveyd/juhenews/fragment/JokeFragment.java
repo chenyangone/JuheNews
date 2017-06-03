@@ -18,6 +18,8 @@ package com.onlyloveyd.juhenews.fragment;
 import com.onlyloveyd.juhenews.gsonbean.JokeBean;
 import com.onlyloveyd.juhenews.retrofit.Retrofitance;
 
+import java.util.List;
+
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -33,15 +35,14 @@ import io.reactivex.disposables.Disposable;
 
 @SuppressWarnings("deprecation")
 public class JokeFragment extends BaseFragment {
-    int pagenum = 1;
 
     @Override
     public void initBGAData() {
         bgaRefreshLayout.beginRefreshing();
     }
 
-    public void getContent(int pagenum) {
-        Observer<JokeBean> observer = new Observer<JokeBean>() {
+    public void getContent() {
+        Observer<List<JokeBean>> observer = new Observer<List<JokeBean>>() {
             @Override
             public void onComplete() {
                 endLoading();
@@ -60,31 +61,29 @@ public class JokeFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(JokeBean jokeBean) {
+            public void onNext(List<JokeBean> jokeBeanList) {
                 if (bgaRefreshLayout.isLoadingMore()) {
                 } else {
                     mVisitableList.clear();
                 }
-                if (jokeBean.getResult() == null || jokeBean.getResult().getData() == null
-                        || jokeBean.getResult().getData().size() == 0) {
+                if (jokeBeanList==null || jokeBeanList.size()==0) {
                     onDataEmpty();
                 } else {
-                    mVisitableList.addAll(jokeBean.getResult().getData());
+                    mVisitableList.addAll(jokeBeanList);
                 }
                 mMultiRecyclerAdapter.setData(mVisitableList);
             }
         };
-        Retrofitance.getInstance().getJoke(observer, pagenum);
+        Retrofitance.getInstance().getJoke(observer);
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        getContent(1);
+        getContent();
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        getContent(++pagenum);
-        return true;
+        return false;
     }
 }

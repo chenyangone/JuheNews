@@ -18,8 +18,6 @@ package com.onlyloveyd.juhenews.gsonbean;
 import com.onlyloveyd.juhenews.decorate.Visitable;
 import com.onlyloveyd.juhenews.factory.TypeFactory;
 
-import java.util.List;
-
 /**
  * 文 件 名: JokeBean
  * 创 建 人: 易冬
@@ -28,94 +26,59 @@ import java.util.List;
  * 博   客: http://onlyloveyd.github.io
  * 描   述：GsonFromat自动生成
  */
-public class JokeBean {
+public class JokeBean implements Visitable{
 
-    private int errorCode;
-    private String reason;
-    private Result result;
 
-    public int getErrorCode() {
-        return errorCode;
+    /**
+     * title : 你要吓死我
+     * content : 　　老公在家玩游戏，手机响了：老公，快点送钱来！我在人民医院门口等你！<br/><br
+     * />　　老公：老婆，你不是和闺蜜逛街的吗？怎么到人民医院去了，出了什么事情？<br/><br/>　　老婆：别废话了，赶紧点！<br/><br
+     * />　　老公一听：人命关天，赶紧点吧。说着关机，出门。<br/><br/>　　到了医院大门口，看到老婆焦急的在看着，立马走过去：怎么回事？你闺蜜呢？是不是她出了什么问题？<br
+     * /><br/>　　老婆：在那看着呢，钱呢？说着一边拿过钱，一边朝着医院大门左侧走去。<br/><br/>　　老公：老婆，她在那看着病，你怎么不往医院里面走？<br/><br
+     * />　　老婆：看什么病？她在这边的服装店里看着那件衣服呢，最后一件了！<br/><br/>　　老公：尼玛，你要吓死我……
+     * poster :
+     * url : http://www.laifudao.com/wangwen/120596.htm
+     */
+
+    private String title;
+    private String content;
+    private String poster;
+    private String url;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getReason() {
-        return reason;
+    public String getContent() {
+        return content;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Result getResult() {
-        return result;
+    public String getPoster() {
+        return poster;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
-    public static class Result {
-
-        private List<Data> data;
-
-        public List<Data> getData() {
-            return data;
-        }
-
-        public void setData(List<Data> data) {
-            this.data = data;
-        }
-
+    public String getUrl() {
+        return url;
     }
 
-
-    public static class Data implements Visitable {
-
-        private String content;
-        private String hashid;
-        private int unixtime;
-        private String updatetime;
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getHashid() {
-            return hashid;
-        }
-
-        public void setHashid(String hashid) {
-            this.hashid = hashid;
-        }
-
-        public int getUnixtime() {
-            return unixtime;
-        }
-
-        public void setUnixtime(int unixtime) {
-            this.unixtime = unixtime;
-        }
-
-        public String getUpdatetime() {
-            return updatetime;
-        }
-
-        public void setUpdatetime(String updatetime) {
-            this.updatetime = updatetime;
-        }
-
-        @Override
-        public int type(TypeFactory typeFactory) {
-            return typeFactory.type(this);
-        }
+    public void setUrl(String url) {
+        this.url = url;
     }
 
+    @Override
+    public int type(TypeFactory typeFactory) {
+        return typeFactory.type(this);
+    }
 }

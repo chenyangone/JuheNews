@@ -24,6 +24,7 @@ import com.onlyloveyd.juhenews.gsonbean.NewsBean;
 import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -85,11 +86,12 @@ public class Retrofitance {
     /**
      * 获取趣图信息
      */
-    public void getFunny(Observer<FunnyBean> subscriber, int pagenum) {
-        String URL =
-                "http://japi.juhe.cn/joke/img/text"
-                        + ".from?key=facd3f89a62400877ee559778e89bb6c&pagesize=20&page="
-                        + pagenum;
+    public void getFunny(Observer<List<FunnyBean>> subscriber) {
+//        String URL =
+//                "http://japi.juhe.cn/joke/img/text"
+//                        + ".from?key=facd3f89a62400877ee559778e89bb6c&pagesize=20&page="
+//                        + pagenum;
+        String URL = "http://api.laifudao.com/open/tupian.json";
         commonOp(mJuheApi.getFunny(URL), subscriber);
     }
 
@@ -106,11 +108,12 @@ public class Retrofitance {
     /**
      * 获取笑话大全
      */
-    public void getJoke(Observer<JokeBean> subscriber, int pagenum) {
-        String URL =
-                "http://japi.juhe.cn/joke/content/text"
-                        + ".from?key=facd3f89a62400877ee559778e89bb6c&pagesize=20&page="
-                        + pagenum;
+    public void getJoke(Observer<List<JokeBean>> subscriber) {
+//        String URL =
+//                "http://japi.juhe.cn/joke/content/text"
+//                        + ".from?key=facd3f89a62400877ee559778e89bb6c&pagesize=20&page="
+//                        + pagenum;
+        String URL = "http://api.laifudao.com/open/xiaohua.json";
         commonOp(mJuheApi.getJoke(URL), subscriber);
     }
 

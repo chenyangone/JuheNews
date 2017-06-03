@@ -15,32 +15,20 @@
                   android:padding="10dp">
         <ImageView
             android:id="@+id/iv_funny_gif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@null"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
 
-        <LinearLayout
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/tv_funny_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_funny_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tv_funny_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textSize="8sp"/>
-        </LinearLayout>
+            android:textColor="@color/colorBlack"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>
