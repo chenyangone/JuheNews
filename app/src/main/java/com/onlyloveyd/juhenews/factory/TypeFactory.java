@@ -36,11 +36,11 @@ import com.onlyloveyd.juhenews.viewholder.BaseViewHolder;
 public interface TypeFactory {
     int type(NewsBean.ResultBean.DataBean newsBean);
 
-    int type(JokeBean jokeBean);
+    int type(JokeBean.Data jokeBean);
 
     int type(HistoryBean.ResultBean historyBean);
 
-    int type(FunnyBean funnyBean);
+    int type(FunnyBean.ResultBean.DataBean funnyBean);
 
     int type(EmptyBean emptyBean);
 

@@ -33,20 +33,21 @@ import com.onlyloveyd.juhenews.gsonbean.FunnyBean;
  * 博   客: https://onlyloveyd.cn
  * 描   述：
  */
-public class FunnyViewHolder extends BaseViewHolder<FunnyBean> {
+public class FunnyViewHolder extends BaseViewHolder<FunnyBean.ResultBean.DataBean> {
     public FunnyViewHolder(View itemView) {
         super(itemView);
     }
 
     @Override
-    public void bindViewData(final FunnyBean data) {
+    public void bindViewData(FunnyBean.ResultBean.DataBean data) {
         ImageView imageView = (ImageView) getView(R.id.iv_funny_gif);
         TextView tvTitle = (TextView) getView(R.id.tv_funny_title);
+        TextView tvDate = (TextView) getView(R.id.tv_funny_date);
 
-        tvTitle.setText(data.getTitle());
-        //tvDate.setText(data.getUpdatetime());
+        tvTitle.setText(data.getContent());
+        tvDate.setText(data.getUpdatetime());
 
-        final String pic = data.getThumburl();
+        final String pic = data.getUrl();
         if (pic != null && !pic.isEmpty()) {
 
             Glide.with(itemView.getContext()).load(pic).placeholder(R.mipmap.empty_data).into(imageView);
@@ -59,7 +60,7 @@ public class FunnyViewHolder extends BaseViewHolder<FunnyBean> {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(itemView.getContext(), WebActivity.class);
-                intent.putExtra("URL", data.getUrl());
+                intent.putExtra("URL", pic);
                 itemView.getContext().startActivity(intent);
             }
         });

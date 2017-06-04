@@ -18,8 +18,6 @@ package com.onlyloveyd.juhenews.fragment;
 import com.onlyloveyd.juhenews.gsonbean.FunnyBean;
 import com.onlyloveyd.juhenews.retrofit.Retrofitance;
 
-import java.util.List;
-
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -35,55 +33,58 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class FunnyFragment extends BaseFragment {
+    int pagenum = 1;
 
     @Override
     public void initBGAData() {
         bgaRefreshLayout.beginRefreshing();
     }
 
-    public void getContent() {
-        Observer<List<FunnyBean>> observer = new Observer<List<FunnyBean>>() {
-            @Override
-            public void onComplete() {
-                endLoading();
-            }
+public void getContent(int pagenum) {
+    Observer<FunnyBean> observer = new Observer<FunnyBean>() {
+        @Override
+        public void onComplete() {
+            endLoading();
+        }
 
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                endLoading();
-                onNetworkError();
-            }
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+            endLoading();
+            onNetworkError();
+        }
 
-            @Override
-            public void onSubscribe(Disposable d) {
+        @Override
+        public void onSubscribe(Disposable d) {
 
-            }
+        }
 
-            @Override
-            public void onNext(List<FunnyBean> funnyBeanList) {
-                if (bgaRefreshLayout.isLoadingMore()) {
-                } else {
-                    mVisitableList.clear();
-                }
-                if (funnyBeanList == null || funnyBeanList.size() == 0) {
-                    onDataEmpty();
-                } else {
-                    mVisitableList.addAll(funnyBeanList);
-                }
-                mMultiRecyclerAdapter.setData(mVisitableList);
+        @Override
+        public void onNext(FunnyBean funnyBean) {
+            if (bgaRefreshLayout.isLoadingMore()) {
+            } else {
+                mVisitableList.clear();
             }
-        };
-        Retrofitance.getInstance().getFunny(observer);
-    }
+            if (funnyBean.getResult() == null || funnyBean.getResult().getData() == null
+                    || funnyBean.getResult().getData().size() == 0) {
+                onDataEmpty();
+            } else {
+                mVisitableList.addAll(funnyBean.getResult().getData());
+            }
+            mMultiRecyclerAdapter.setData(mVisitableList);
+        }
+    };
+    Retrofitance.getInstance().getFunny(observer, pagenum);
+}
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        getContent();
+        getContent(1);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        return false;
+        getContent(++pagenum);
+        return true;
     }
 }

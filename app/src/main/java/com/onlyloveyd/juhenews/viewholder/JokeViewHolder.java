@@ -29,17 +29,17 @@ import com.onlyloveyd.juhenews.gsonbean.JokeBean;
  * 博   客: https://onlyloveyd.cn
  * 描   述：
  */
-public class JokeViewHolder extends BaseViewHolder<JokeBean> {
+public class JokeViewHolder extends BaseViewHolder<JokeBean.Data> {
     public JokeViewHolder(View itemView) {
         super(itemView);
     }
 
     @Override
-    public void bindViewData(JokeBean data) {
+    public void bindViewData(JokeBean.Data data) {
         TextView tvContent = (TextView) getView(R.id.tv_joke_content);
         TextView tvDate = (TextView) getView(R.id.tv_joke_updatetime);
 
-        String content = data.getContent().replace("<br/>", "\n");
-        tvContent.setText(content);
+        tvContent.setText(data.getContent());
+        tvDate.setText(data.getUpdatetime());
     }
 }

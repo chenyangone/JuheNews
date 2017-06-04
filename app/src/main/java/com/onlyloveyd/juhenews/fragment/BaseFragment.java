@@ -75,18 +75,18 @@ public class BaseFragment extends Fragment implements BGARefreshLayout.BGARefres
         return view;
     }
 
-    private void initBGALayout() {
-        // 为BGARefreshLayout 设置代理
-        bgaRefreshLayout.setDelegate(this);
-        // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
+private void initBGALayout() {
+    // 为BGARefreshLayout 设置代理
+    bgaRefreshLayout.setDelegate(this);
+    // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
 
-        BGANormalRefreshViewHolder refreshViewHolder =
-                new BGANormalRefreshViewHolder(getContext(), true);
-        refreshViewHolder.setLoadingMoreText("加载更多");
-        refreshViewHolder.setLoadMoreBackgroundColorRes(R.color.white);
-        refreshViewHolder.setRefreshViewBackgroundColorRes(R.color.white);
-        bgaRefreshLayout.setRefreshViewHolder(refreshViewHolder);
-    }
+    BGANormalRefreshViewHolder refreshViewHolder =
+            new BGANormalRefreshViewHolder(getContext(), true);
+    refreshViewHolder.setLoadingMoreText("加载更多");
+    refreshViewHolder.setLoadMoreBackgroundColorRes(R.color.white);
+    refreshViewHolder.setRefreshViewBackgroundColorRes(R.color.white);
+    bgaRefreshLayout.setRefreshViewHolder(refreshViewHolder);
+}
 
     private void initRvContent() {
         llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

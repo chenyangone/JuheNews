@@ -21,8 +21,6 @@ import com.onlyloveyd.juhenews.gsonbean.JokeBean;
 import com.onlyloveyd.juhenews.gsonbean.NewsBean;
 import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
@@ -40,10 +38,10 @@ public interface JuheApi {
     Observable<NewsBean> getNews(@Url String url);
 
     @GET
-    Observable<List<FunnyBean>> getFunny(@Url String url);
+    Observable<FunnyBean> getFunny(@Url String url);
 
     @GET
-    Observable<List<JokeBean>> getJoke(@Url String url);
+    Observable<JokeBean> getJoke(@Url String url);
 
     @GET
     Observable<HistoryBean> getTodayInHistory(@Url String url);

@@ -54,7 +54,7 @@ public class MultiTypeFactory implements TypeFactory {
     }
 
     @Override
-    public int type(JokeBean jokeBean) {
+    public int type(JokeBean.Data jokeBean) {
         return JOKE_ITEM_LAYOUT_ID;
     }
 
@@ -64,7 +64,7 @@ public class MultiTypeFactory implements TypeFactory {
     }
 
     @Override
-    public int type(FunnyBean funnyBean) {
+    public int type(FunnyBean.ResultBean.DataBean funnyBean) {
         return FUNNY_ITEM_LAYOUT_ID;
     }
 
