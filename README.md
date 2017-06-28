@@ -4,7 +4,7 @@
 使用聚合新闻数据而成的新闻资讯客户端
 
 ## 下载
-[fir](https://fir.im/JuKan)
+[fir.im](https://fir.im/JuKan)
 
 ## 数据源
 数据来源于：聚合数据，接口每天请求数量受限
