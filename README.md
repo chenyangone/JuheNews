@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/language-java-orange.svg)![](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-v1.1-yellow.svg) [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
+![](https://img.shields.io/badge/language-java-orange.svg) ![](https://img.shields.io/badge/%E7%89%88%E6%9C%AC-v1.1-yellow.svg) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 # 聚闻
 ![icon](/app/src/main/res/mipmap-xxhdpi/ic_launcher.png "")
 
