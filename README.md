@@ -18,14 +18,14 @@
 3. 材料设计
 
 ## 代码设计
-1. Retrofit+RxJava 的组合获取网络数据;
+1. Retrofit2 + RxJava2 的组合获取网络数据;
 2. TabHost + Fragment 作为主界面结构,实现“资讯”，“笑话”，“趣图”，“历史上的今天”四个模块
-3. BGARefreshLayout配合RecyclerView和自定义多类型Item结构实现干货数据的展示;
+3. BGARefreshLayout配合RecyclerView和自定义多类型Item结构实现数据的展示;
 4. Glide作为图片加载框架；
-5. RxJava+Retrofit配合fir.im的接口实现版本更新功能；
-6. Share功能全部采用系统自带，基本可以满足需求。
-7. ButterKnife注解库
-8. Gson作为json数据解析库
+5. Share功能全部采用系统自带，基本可以满足需求。
+6. ButterKnife注解库
+7. Gson作为json数据解析库
+8. PagerSlidingTabStrip丰富标签页的显示
 
 
 ## 依赖库
@@ -37,6 +37,7 @@
 * [Gson](https://github.com/google/gson)
 * [ButterKnife](https://github.com/JakeWharton/butterknife)
 * [BGARefreshLayout-Android](https://github.com/bingoogolapple/BGARefreshLayout-Android)
+* [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip)
 
 ## Author
 * [CSDN](http://blog.csdn.net/poorkick)
