@@ -26,8 +26,11 @@ import com.bumptech.glide.Glide;
 import com.onlyloveyd.juhenews.R;
 import com.onlyloveyd.juhenews.activity.WebActivity;
 import com.onlyloveyd.juhenews.gsonbean.NewsBean;
+import com.onlyloveyd.juhenews.retrofit.Retrofitance;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 文 件 名: NewsViewHolder
@@ -37,13 +40,13 @@ import butterknife.BindView;
  * 博   客: https://onlyloveyd.cn
  * 描   述：
  */
-public class NewsViewHolder extends BaseViewHolder<NewsBean.ResultBean.DataBean> {
+public class NewsViewHolder extends BaseViewHolder<NewsBean.DataBean> {
     public NewsViewHolder(View itemView) {
         super(itemView);
     }
 
     @Override
-    public void bindViewData(final NewsBean.ResultBean.DataBean data) {
+    public void bindViewData(final NewsBean.DataBean data) {
 
         TextView tvTitle = (TextView) getView(R.id.tv_news_title);
         TextView tvAuthor = (TextView) getView(R.id.tv_news_author);
@@ -51,12 +54,13 @@ public class NewsViewHolder extends BaseViewHolder<NewsBean.ResultBean.DataBean>
         ImageView imageView = (ImageView) getView(R.id.iv_news_pic1);
 
 
-        tvTitle.setText(data.getTitle());
-        tvAuthor.setText(data.getAuthor_name());
-        tvDate.setText(data.getDate());
+        tvTitle.setText(data.getProduct_name() + "\n"+ data.getProduct_desc());
+        tvAuthor.setText(data.getHit_count());
+        tvDate.setText(data.getMoney_limit());
 
-        String pic1path = data.getThumbnail_pic_s();
+        String pic1path = data.getProduct_logo_url();
         if (pic1path != null) {
+            pic1path = "http://123.206.66.237" + pic1path;
             Glide.with(itemView.getContext()).load(pic1path).placeholder(R.mipmap.empty_data).into(imageView);
         } else {
             imageView.setVisibility(GONE);
@@ -67,8 +71,32 @@ public class NewsViewHolder extends BaseViewHolder<NewsBean.ResultBean.DataBean>
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(itemView.getContext(), WebActivity.class);
-                intent.putExtra("URL", data.getUrl());
+                String app_url =  data.getProduct_app_url();
+                intent.putExtra("URL", app_url);
                 itemView.getContext().startActivity(intent);
+                //点击次数上报
+                Observer<NewsBean> subscriber = new Observer<NewsBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(NewsBean newsBean) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                };
+                Retrofitance.getInstance().addHitCount(subscriber, data.getId());
             }
         });
     }

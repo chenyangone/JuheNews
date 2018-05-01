@@ -18,6 +18,7 @@ package com.onlyloveyd.juhenews.retrofit;
 import com.onlyloveyd.juhenews.gsonbean.FunnyBean;
 import com.onlyloveyd.juhenews.gsonbean.HistoryBean;
 import com.onlyloveyd.juhenews.gsonbean.JokeBean;
+import com.onlyloveyd.juhenews.gsonbean.LoanBean;
 import com.onlyloveyd.juhenews.gsonbean.NewsBean;
 import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
 
@@ -48,4 +49,12 @@ public interface JuheApi {
 
     @GET
     Observable<QueryNewsBean> getQueryNews(@Url String url);
+
+    @GET
+    Observable<LoanBean> getLoans(@Url String url);
+
+    @GET
+    Observable<NewsBean> addHitCount(@Url String url);
+
+
 }

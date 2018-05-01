@@ -10,8 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/colorBottomBackground"
+        android:textSize="20sp"
         app:pstsIndicatorColor="@color/colorBottomSelected"
-        app:pstsIndicatorHeight="4dp" />
+        app:pstsIndicatorHeight="4dp"
+        app:pstsTabPaddingLeftRight="70sp" />
+
+   <!-- <TextView
+        android:id="@+id/tv_zixun_title"
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:background="@color/colorBottomBackground"
+        android:gravity="left"
+        android:paddingLeft="2sp"/>
+      -->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_news"

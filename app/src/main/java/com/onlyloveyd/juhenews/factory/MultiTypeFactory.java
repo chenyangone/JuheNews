@@ -24,6 +24,7 @@ import com.onlyloveyd.juhenews.gsonbean.HistoryBean;
 import com.onlyloveyd.juhenews.gsonbean.JokeBean;
 import com.onlyloveyd.juhenews.gsonbean.NewsBean;
 import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
+import com.onlyloveyd.juhenews.gsonbean.LoanBean;
 import com.onlyloveyd.juhenews.viewholder.BaseViewHolder;
 import com.onlyloveyd.juhenews.viewholder.EmptyViewHolder;
 import com.onlyloveyd.juhenews.viewholder.FunnyViewHolder;
@@ -47,9 +48,10 @@ public class MultiTypeFactory implements TypeFactory {
     final int JOKE_ITEM_LAYOUT_ID = R.layout.rv_joke_item;
     final int EMPTY_ITEM_LAYOUT_ID = R.layout.rv_empty_item;
     final int QUERYNEWS_ITEM_LAYOUT_ID = R.layout.rv_querynews_item;
+    final int LOAN_ITEM_LAYOUT_ID = R.layout.rv_news_item;
 
     @Override
-    public int type(NewsBean.ResultBean.DataBean newsBean) {
+    public int type(NewsBean.DataBean newsBean) {
         return NEWS_ITEM_LAYOUT_ID;
     }
 
@@ -77,6 +79,12 @@ public class MultiTypeFactory implements TypeFactory {
     public int type(QueryNewsBean.ResultBean queryNewsBean) {
         return QUERYNEWS_ITEM_LAYOUT_ID;
     }
+
+    @Override
+    public int type(LoanBean.ResultBean.DataBean loanBean){
+        return LOAN_ITEM_LAYOUT_ID;
+    }
+
 
     @Override
     public BaseViewHolder createViewHolder(int type, View itemView) {

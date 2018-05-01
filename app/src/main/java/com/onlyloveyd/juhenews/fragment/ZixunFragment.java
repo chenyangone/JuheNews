@@ -22,6 +22,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.onlyloveyd.juhenews.R;
@@ -46,13 +47,18 @@ public class ZixunFragment extends Fragment {
     @BindView(R.id.vp_news)
     ViewPager viewPager = null;
 
+    /*@BindView(R.id.tv_zixun_title)
+    TextView tvTitle = null;*/
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_zixun, container, false);
         ButterKnife.bind(this, view);
+        //tvTitle.setText("精选优质");
         viewPager.setAdapter(new NewsPagerAdapter(getFragmentManager()));
+        viewPager.setOffscreenPageLimit(4);
         pagerSlidingTabStrip.setViewPager(viewPager);
         return view;
     }

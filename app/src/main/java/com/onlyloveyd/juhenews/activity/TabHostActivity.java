@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,8 +44,8 @@ import butterknife.ButterKnife;
  */
 public class TabHostActivity extends AppCompatActivity {
 
-    @BindView(R.id.tabhost)
-    TabHost tabHost = null;
+    @BindView(R.id.activity_main)
+    LinearLayout tabLayout = null;
     @BindView(R.id.toolbar)
     Toolbar toolbar = null;
 
@@ -63,13 +64,18 @@ public class TabHostActivity extends AppCompatActivity {
         toolbar.setTitleTextAppearance(this, R.style.ToolBarTextAppearance);
         setSupportActionBar(toolbar);
 
-        tabHost.setup();//初始化TabHost
+        //tabHost.setup();//初始化TabHost
+
+        /*View view = LayoutInflater.from(this).inflate(R.layout.tab_widget_indicator, null,
+                false);
+        TextView textView = (TextView) view.findViewById(R.id.tv_indicator);
+        ImageView imageView = (ImageView) view.findViewById(R.id.iv_indicator);
+        textView.setText("资讯");
+        imageView.setImageResource(R.drawable.news);*/
+
         /*添加tab*/
-        for (int i = 0; i < 4; i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.tab_widget_indicator, null,
-                    false);
-            TextView textView = (TextView) view.findViewById(R.id.tv_indicator);
-            ImageView imageView = (ImageView) view.findViewById(R.id.iv_indicator);
+        /*for (int i = 0; i < 4; i++) {
+
 
             switch (i) {
                 case 0:
@@ -100,9 +106,9 @@ public class TabHostActivity extends AppCompatActivity {
                     break;
             }
 
-        }
+        }*/
         /*设置标签切换监听器*/
-        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+      /*  tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
                 for (int i = 0; i < 4; i++) {//颜色全部重置
@@ -119,7 +125,7 @@ public class TabHostActivity extends AppCompatActivity {
         });
         ((TextView) tabHost.getCurrentTabView().findViewById(R.id.tv_indicator)).setTextColor(
                 getResources().getColor(R.color.colorBottomSelected));//第一次进入的时候讲选中的Tab修改文字颜色
-
+*/
     }
 
 

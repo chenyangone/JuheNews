@@ -21,6 +21,7 @@ import com.onlyloveyd.juhenews.gsonbean.EmptyBean;
 import com.onlyloveyd.juhenews.gsonbean.FunnyBean;
 import com.onlyloveyd.juhenews.gsonbean.HistoryBean;
 import com.onlyloveyd.juhenews.gsonbean.JokeBean;
+import com.onlyloveyd.juhenews.gsonbean.LoanBean;
 import com.onlyloveyd.juhenews.gsonbean.NewsBean;
 import com.onlyloveyd.juhenews.gsonbean.QueryNewsBean;
 import com.onlyloveyd.juhenews.viewholder.BaseViewHolder;
@@ -34,7 +35,7 @@ import com.onlyloveyd.juhenews.viewholder.BaseViewHolder;
  * 描   述：
  */
 public interface TypeFactory {
-    int type(NewsBean.ResultBean.DataBean newsBean);
+    int type(NewsBean.DataBean newsBean);
 
     int type(JokeBean.Data jokeBean);
 
@@ -45,6 +46,8 @@ public interface TypeFactory {
     int type(EmptyBean emptyBean);
 
     int type(QueryNewsBean.ResultBean queryNewsBean);
+
+    int type(LoanBean.ResultBean.DataBean loanBean);
 
     BaseViewHolder createViewHolder(int type, View itemView);
 }

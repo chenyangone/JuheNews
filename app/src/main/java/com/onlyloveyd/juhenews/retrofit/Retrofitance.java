@@ -77,8 +77,13 @@ public class Retrofitance {
      * 根据类型获取新闻信息
      */
     public void getNews(Observer<NewsBean> subscriber, String type) {
-        String URL = "http://v.juhe.cn/toutiao/index?type=" + type
-                + "&key=53555bf8010e1bf9c42cc0f9fbe8578a";
+        String URL = "http://123.206.66.237/admin.php/loan_shop/loan_api/getLoan/type/" + type;
+        commonOp(mJuheApi.getNews(URL),subscriber);
+    }
+
+    //点击上报
+    public void addHitCount(Observer<NewsBean> subscriber,String id){
+        String URL = "http://123.206.66.237/admin.php/loan_shop/loan_api/addcount/id/" + id;
         commonOp(mJuheApi.getNews(URL),subscriber);
     }
 
@@ -118,6 +123,12 @@ public class Retrofitance {
     public void getQueryNews(Observer<QueryNewsBean> subscriber, String keyword) {
         String URL = "http://op.juhe.cn/onebox/news/query?key=a74ca9043842d6cfe2704f4b765ce2b9&q=" + keyword;
         commonOp(mJuheApi.getQueryNews(URL), subscriber);
+    }
+
+
+    public void getLoans(Observer<QueryNewsBean> subscriber, String type){
+        String URL = "http://http://123.206.66.237/admin.php/loan_shop/loan_api/getLoan/type/" + type;
+        commonOp(mJuheApi.getLoans(URL),subscriber);
     }
 
     private void commonOp(Observable observable, Observer subscriber) {

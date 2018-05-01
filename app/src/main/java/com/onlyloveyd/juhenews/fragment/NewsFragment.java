@@ -72,11 +72,11 @@ public class NewsFragment extends BaseFragment {
                 } else {
                     mVisitableList.clear();
                 }
-                if (newsBean.getResult() == null || newsBean.getResult().getData() == null
-                        || newsBean.getResult().getData().size() == 0) {
+                if (newsBean == null || newsBean.getData() == null
+                        || newsBean.getData().size() == 0) {
                     onDataEmpty();
                 } else {
-                    mVisitableList.addAll(newsBean.getResult().getData());
+                    mVisitableList.addAll(newsBean.getData());
                 }
                 mMultiRecyclerAdapter.setData(mVisitableList);
             }
